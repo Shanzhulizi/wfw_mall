@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>service-user</module>
+        <module>service-product</module>
+        <module>service-order</module>
     </modules>
 
     <properties>
