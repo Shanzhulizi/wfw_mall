@@ -4,21 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/pom.xml" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="创建一个微服务商城项目">
+      <change afterPath="$PROJECT_DIR$/services/payment-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/promotion-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/search-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-order/src/main/java/order/OrderMainApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-order/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-product/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/file-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-product/src/main/java/com/lm/product/ProductMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/ProductMainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-product/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/file-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-user/src/main/java/com/lm/user/UserMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/UserMainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/service-user/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,14 +61,30 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Code/Java/wfw_mall/services/file-service/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Code\Java\wfw_mall\services\file-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\cart-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\promotion-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\payment-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\search-service\src\main\resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="lua.exe" />
@@ -70,11 +105,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752233929162</updated>
-      <workItem from="1752233930245" duration="810000" />
+      <workItem from="1752233930245" duration="1740000" />
     </task>
+    <task id="LOCAL-00001" summary="创建一个微服务商城项目">
+      <option name="closed" value="true" />
+      <created>1752234826101</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752234826101</updated>
+    </task>
+    <task id="LOCAL-00002" summary="创建一个微服务商城项目">
+      <option name="closed" value="true" />
+      <created>1752235066399</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1752235066399</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="创建一个微服务商城项目" />
+    <option name="LAST_COMMIT_MESSAGE" value="创建一个微服务商城项目" />
   </component>
 </project>

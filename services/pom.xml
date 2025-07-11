@@ -12,9 +12,14 @@
     <artifactId>services</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>service-user</module>
-        <module>service-product</module>
-        <module>service-order</module>
+        <module>user-service</module>
+        <module>product-service</module>
+        <module>order-service</module>
+        <module>payment-service</module>
+        <module>cart-service</module>
+        <module>search-service</module>
+        <module>promotion-service</module>
+        <module>file-service</module>
     </modules>
 
     <properties>

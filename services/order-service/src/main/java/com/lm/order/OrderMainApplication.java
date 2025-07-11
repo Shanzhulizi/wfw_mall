@@ -1,4 +1,4 @@
-package order;
+package com.lm.order;
 
 public class OrderMainApplication {
 }
