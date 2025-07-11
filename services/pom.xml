@@ -20,6 +20,7 @@
         <module>search-service</module>
         <module>promotion-service</module>
         <module>file-service</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>

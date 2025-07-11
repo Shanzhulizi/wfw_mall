@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    include: route
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+
+# localhost/api/order
+server:
+  port: 10000
