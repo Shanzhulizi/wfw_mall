@@ -37,7 +37,8 @@ public class User {
 
     private LocalDateTime createTime;
 
-    private Integer isDeleted;
-
-    private LocalDateTime deleteTime;
+    //删除直接挪到其他表里
+//    private Integer isDeleted;
+//
+//    private LocalDateTime deleteTime;
 }

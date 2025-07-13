@@ -19,7 +19,6 @@ public class UserDTO {
 
     private Integer userType;
 
-    private Integer isDeleted;
+    private LocalDateTime vipExpireTime;
 
-    private LocalDateTime deleteTime;
 }

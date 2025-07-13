@@ -22,8 +22,5 @@ public class UserUpdateDTO {
 
     private Long merchantId;
 
-    private Integer isDeleted;
-
-    private LocalDateTime deleteTime;
 }
 

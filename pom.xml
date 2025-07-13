@@ -17,6 +17,7 @@
         <module>gateway</module>
         <module>services</module>
         <module>model</module>
+        <module>common-web</module>
     </modules>
 
     <properties>

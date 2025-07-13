@@ -20,8 +20,10 @@ public interface UserMapper {
      */
     int insertAccountWithPhone(String phone, LocalDateTime createTime);
 
-    UserDTO selectByPhone(String phone);
+    User selectByPhone(String phone);
 
 
     int updateUserByDTO(UserUpdateDTO user);
+
+    int deleteUserById(Long userId);
 }

@@ -17,50 +17,16 @@
     </resultMap>
 
 
-    <select id="selectByUsernameAndPassword" resultMap="userMap">
-        SELECT private Long id;
-        private
-        String username;
-    /**
-     * 用户类型：
-     * 0 - 普通用户
-     * 1 - VIP用户
-     * 2 - 商家
-     */
-    private
-        Integer userType;
-
-    /**
-     * VIP到期时间，仅在 userType = 1 时有值
-     */
-    private
-        LocalDateTime vipExpireTime;
-
-    /**
-     * 商户ID，仅在 userType = 2 时有值
-     */
-    private
-        Long merchantId;
-
-
-        FROM user WHERE username =
-        #{username}
-        AND
-        password
-        =
-        #{password}
-    </select>
-
-
     <insert id="insertAccountWithPhone" parameterType="com.lm.user.domain.User">
-        INSERT INTO user (phone, user_type, create_time, is_deleted)
-        VALUES (#{phone}, 0, #{createTime}, 0)
+        INSERT INTO user (phone, user_type, create_time)
+        VALUES (#{phone}, 0, #{createTime})
     </insert>
 
 
-    <select id="selectByPhone" resultType="com.lm.user.dto.UserDTO">
+    <select id="selectByPhone" resultType="com.lm.user.domain.User">
         SELECT id,
                phone,
+               password,
                user_type
         FROM user
         WHERE phone = #{phone}
@@ -81,49 +47,8 @@
         WHERE id = #{id}
     </update>
 
-    <!--    ==============================================================-->
 
-
-    <select id="selectById" resultMap="userMap">
-        SELECT *
-        FROM user
-        WHERE id = #{id}
-    </select>
-
-    <select id="selectAll" resultMap="userMap">
-        SELECT *
-        FROM user
-    </select>
-
-    <select id="selectByUsername" resultMap="userMap">
-        SELECT *
-        FROM user
-        WHERE username = #{username}
-    </select>
-
-    <insert id="insert" parameterType="com.lm.user.domain.User">
-        INSERT INTO user (username, password, phone, email, user_type, vip_expire_time, merchant_id, create_time)
-        VALUES (#{username}, #{password}, #{phone}, #{email}, #{userType}, #{vipExpireTime}, #{merchantId},
-                #{createTime})
-    </insert>
-
-<!--    <update id="update" parameterType="com.lm.user.domain.User">-->
-<!--        UPDATE user-->
-<!--        SET username        = #{username},-->
-<!--            password        = #{password},-->
-<!--            phone           = #{phone},-->
-<!--            email           = #{email},-->
-<!--            user_type       = #{userType},-->
-<!--            vip_expire_time = #{vipExpireTime},-->
-<!--            merchant_id     = #{merchantId},-->
-<!--            create_time     = #{createTime}-->
-<!--        WHERE id = #{id}-->
-<!--    </update>-->
-
-    <delete id="deleteById">
-        DELETE
-        FROM user
-        WHERE id = #{id}
+    <delete id="deleteUserById">
+        DELETE FROM user WHERE id = #{userId}
     </delete>
-
 </mapper>

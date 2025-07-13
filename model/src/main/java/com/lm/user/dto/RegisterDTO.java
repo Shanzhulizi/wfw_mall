@@ -14,7 +14,4 @@ public class RegisterDTO {
 
     private String email;
 
-
-    private Integer isDeleted;
-
 }
