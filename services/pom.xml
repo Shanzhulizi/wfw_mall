@@ -14,13 +14,17 @@
     <modules>
         <module>user-service</module>
         <module>product-service</module>
-        <module>order-service</module>
         <module>payment-service</module>
         <module>cart-service</module>
         <module>search-service</module>
         <module>promotion-service</module>
         <module>file-service</module>
         <module>auth-service</module>
+        <module>order-service</module>
+        <module>admin-service</module>
+        <module>logistics-service</module>
+        <module>message-servicce</module>
+
     </modules>
 
     <properties>

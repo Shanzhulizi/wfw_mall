@@ -9,4 +9,4 @@ spring:
 
 # localhost/api/order
 server:
-  port: 10000
+  port: 20000
