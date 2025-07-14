@@ -11,6 +11,7 @@ import com.lm.user.service.UserService;
 import com.lm.user.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,29 +30,66 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDeleteMapper userDeleteMapper;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
     @Override
-    public User login(String phone, String password) {
+    public R loginWithPasswordOrCode(String phone, String password, String code) {
 
-//        密码加密
-
-        User user = userMapper.selectByPhone(phone);
-        if (user == null ) {
-            throw new RuntimeException("用户不存在");
+        if (phone == null || phone.isEmpty()) {
+            return R.error("手机号不能为空");
         }
-// 用 BCrypt 检查密码是否匹配
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        boolean matched = passwordEncoder.matches(password, user.getPassword());
+        if ((password == null || password.isEmpty()) && (code == null || code.isEmpty())) {
+            return R.error("请填写密码或验证码");
+        }
+        User loginUser = null;
+        if (password == null || password.isEmpty()) {
+            // 手机号验证码登录
+            // 从 Redis 中获取验证码
+            String redisCode = stringRedisTemplate.opsForValue().get("register:code:" + phone);
+            if (redisCode == null) {
+                return R.error("验证码已过期或不存在");
+            }
+            // 验证码匹配
+            if (!redisCode.equals(code)) {
+                return R.error("验证码不正确");
+            }
+            // 验证通过后，删除 Redis 中的验证码
+            stringRedisTemplate.delete("register:code:" + phone);
 
-        if (!matched) {
-            throw new RuntimeException("密码错误");
+            loginUser = userMapper.selectByPhone(phone);
+        } else {
+            // 手机号密码登录
+            User user = userMapper.selectByPhone(phone);
+            if (user == null) {
+                throw new RuntimeException("用户不存在");
+            }
+            // 用 BCrypt 检查密码是否匹配
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            boolean matched = passwordEncoder.matches(password, user.getPassword());
+
+            if (!matched) {
+                throw new RuntimeException("密码错误");
+            }
+
+            //TODO 添加ThreadLocal
+            //这里还要添加token(jwt)
+            //添加ThreadLocal，添加登录自动过期功能
+
+            // 登录成功后，设置用户信息到 ThreadLocal
+
+        }
+        //无论何种方式，只要通过都要返回token
+        //jwt作为token
+        String token = getToken(loginUser);
+        log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
+        if (token == null || token.isEmpty()) {
+            return R.error("创建token失败，请稍后再试");
         }
 
-        //TODO 添加ThreadLocal
-        //这里还要添加token(jwt)
-        //添加ThreadLocal，添加登录自动过期功能
+        return R.ok("登录成功",  token);
 
-        return user;
     }
+
 
     @Override
     public R createAccountOrLoginWithPhone(String phone) {
@@ -122,9 +160,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
     @Transactional(rollbackFor = Exception.class)
     @Override
     /**
@@ -137,7 +172,7 @@ public class UserServiceImpl implements UserService {
             log.info("商户注销");
             //TODO 商户注销逻辑,我感觉会很复杂，还要记录注销商户表
         }
-        int deleteNum= userMapper.deleteUserById(userId);
+        int deleteNum = userMapper.deleteUserById(userId);
         if (deleteNum != 1) {
             throw new RuntimeException("删除用户失败");
         }
@@ -154,11 +189,13 @@ public class UserServiceImpl implements UserService {
         // 插入注销日志
         log.info("用户注销，用户ID：{}，删除原因：{}，IP：{}，User-Agent：{}，手机号：{}，用户类型：{}",
                 userId, deleteReason, ip, userAgent, phone, userType);
-        int insertNum=  userDeleteMapper.insertDeleteRecord(userDeleteLog);
+        int insertNum = userDeleteMapper.insertDeleteRecord(userDeleteLog);
         if (insertNum != 1) {
             throw new RuntimeException("插入注销日志失败");
         }
 
 
     }
+
+
 }

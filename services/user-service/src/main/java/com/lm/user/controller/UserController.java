@@ -41,68 +41,19 @@ public class UserController {
 
     @PostMapping("/login")
     public R login(@RequestBody UserLoginDTO userLoginDTO) {
-        //TODO 登录功能 要么用手机号和验证码登录（已实现），要么用手机号和密码登录（未实现）
-
         String phone = userLoginDTO.getPhone();
         String password = userLoginDTO.getPassword();
         String code = userLoginDTO.getCode();
-        if (phone == null || phone.isEmpty()) {
-            return R.error("手机号不能为空");
-        }
-        if ((password == null || password.isEmpty()) && (code == null || code.isEmpty())) {
-            return R.error("错误");
-        }
-        User loginUser = null;
-        if (password == null || password.isEmpty()) {
-            // 手机号验证码登录
-            if (code == null || code.isEmpty()) {
-                return R.error("验证码不能为空");
-            }
-            // 从 Redis 中获取验证码
-            String redisCode = stringRedisTemplate.opsForValue().get("register:code:" + phone);
-            if (redisCode == null) {
-                return R.error("验证码已过期或不存在");
-            }
-            // 验证码匹配
-            if (!redisCode.equals(code)) {
-                return R.error("验证码不正确");
-            }
-            // 验证通过后，删除 Redis 中的验证码
-            stringRedisTemplate.delete("register:code:" + phone);
+        R r = userService.loginWithPasswordOrCode(phone, password, code);
 
-
-            loginUser = userMapper.selectByPhone(phone);
-
-        } else {
-            // 手机号密码登录
-
-            loginUser = userService.login(phone, password);
-
-            if (loginUser == null) {
-                return R.error("登录失败，手机号或密码错误");
-            }
-
-            // 登录成功后，设置用户信息到 ThreadLocal
-
+        Integer statusCode = r.getCode();
+        if (statusCode != 200) {
+            log.info("登录失败，手机号：{}，错误信息：{}", phone, r.getMsg());
+            return R.error(r.getMsg());
         }
 
-        //无论何种方式，只要通过都要返回token
-
-
-        //jwt作为token
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "user"); // 角色可以是 user 或 admin，根据实际情况设置
-        claims.put("id",  loginUser.getId());
-        claims.put("phone", loginUser.getPhone());
-        claims.put("userType", loginUser.getUserType());
-
-        String token = JwtUtil.generateToken(claims);
-
-        log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
-        if (token == null || token.isEmpty()) {
-//            throw new RuntimeException("创建token失败，请稍后再试");
-            return R.error("创建token失败，请稍后再试");
-        }
+        // 登录成功，生成 JWT Token
+        String token = R.error().getData().toString();
 
         return R.ok("登录成功", "Bearer " + token);
 
