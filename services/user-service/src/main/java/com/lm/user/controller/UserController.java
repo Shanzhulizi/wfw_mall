@@ -91,11 +91,13 @@ public class UserController {
 
         //jwt作为token
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", loginUser.getId());
+        claims.put("role", "user"); // 角色可以是 user 或 admin，根据实际情况设置
+        claims.put("id",  loginUser.getId());
         claims.put("phone", loginUser.getPhone());
         claims.put("userType", loginUser.getUserType());
 
         String token = JwtUtil.generateToken(claims);
+
         log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
         if (token == null || token.isEmpty()) {
 //            throw new RuntimeException("创建token失败，请稍后再试");

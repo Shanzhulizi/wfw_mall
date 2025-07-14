@@ -1,32 +1,31 @@
 package com.lm.utils;
 
+import com.lm.admin.dto.AdminDTO;
 import com.lm.user.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-/**
- * 用户上下文持有者，用于获取当前请求的用户信息
- * 通过请求头中的 x-user-id, x-user-phone, x-user-type 获取用户信息
- */
+public class AdminContextHolder {
 
-public class UserContextHolder {
-
-    public static UserDTO getUser() {
+    public static AdminDTO getAdmin() {
 
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
 
-        String idStr = request.getHeader("x-user-id");
+        String idStr = request.getHeader("x-admin-id");
         if (idStr == null || idStr.isEmpty()) {
             // 这里可以选择抛异常或者返回null
             throw new RuntimeException("请求头缺少 x-user-id");
         }
-        UserDTO user = new UserDTO();
-        user.setId(Long.valueOf(request.getHeader("x-user-id")));
-        user.setPhone(request.getHeader("x-user-phone"));
-        user.setUserType(Integer.valueOf(request.getHeader("x-user-type")));
+        if (request.getHeader("x-admin-permission") == null) {
+            throw new RuntimeException("请求头缺少 x-admin-permission");
+        }
 
-        return user;
+        AdminDTO admin = new AdminDTO();
+        admin.setAdminId(Long.valueOf(request.getHeader("x-admin-id")));
+        admin.setPermission(Integer.valueOf(request.getHeader("x-admin-permission")));
+
+        return admin;
     }
 }

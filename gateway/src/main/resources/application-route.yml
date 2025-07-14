@@ -15,6 +15,14 @@ spring:
             - Path=/api/user/** # 拦截前缀
           filters:
             - StripPrefix=1 # 去掉 /api
+
+
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/api/admin/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
 #
 #-------------------------------------------------
 #

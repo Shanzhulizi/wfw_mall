@@ -4,40 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="登录注册功能和网关配置">
-      <change afterPath="$PROJECT_DIR$/common-web/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/RedisUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/config/CorsGlobalConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/UserDeleteLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/DeleteUserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserLoginDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/mapper/AdminMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/impl/AdminServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/file.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/mapper/AdminMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserDeleteMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserDeleteMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="登录注册功能完结">
+      <change afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/AdminContextHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/dto/AdminDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/bean/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/RegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserUpdateDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/utils/RedisUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/utils/UserContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/config/CorsGlobalConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/config/CorsGlobalConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,32 +44,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.GatewayMainApplication.executor": "Run",
-    "Spring Boot.UserMainApplication.executor": "Run",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Code/Java/wfw_mall/services/user-service/src/main/resources/mapper",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.GatewayMainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UserMainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Code/Java/wfw_mall/services/user-service/src/main/resources/mapper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Code\Java\wfw_mall\services\user-service\src\main\resources\mapper" />
@@ -117,7 +97,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.UserMainApplication">
+  <component name="RunManager" selected="Spring Boot.GatewayMainApplication">
     <configuration name="AuthMainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="auth-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.lm.auth.AuthMainApplication" />
@@ -225,7 +205,10 @@
       <workItem from="1752304020785" duration="1576000" />
       <workItem from="1752308847169" duration="7912000" />
       <workItem from="1752327864317" duration="14114000" />
-      <workItem from="1752388358468" duration="10211000" />
+      <workItem from="1752388358468" duration="10523000" />
+      <workItem from="1752404135517" duration="669000" />
+      <workItem from="1752471577815" duration="741000" />
+      <workItem from="1752497788020" duration="3901000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -267,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752388399094</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="登录注册功能完结">
+      <option name="closed" value="true" />
+      <created>1752400573914</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1752400573914</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +267,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="创建一个微服务商城项目" />
     <MESSAGE value="登录注册功能和网关配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="登录注册功能和网关配置" />
+    <MESSAGE value="登录注册功能完结" />
+    <option name="LAST_COMMIT_MESSAGE" value="登录注册功能完结" />
   </component>
 </project>

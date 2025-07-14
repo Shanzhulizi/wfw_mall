@@ -73,24 +73,28 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        //jwt作为token
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getId());
-        claims.put("phone", user.getPhone());
-//        claims.put("username", null);//这里还没有填写用户名
-        claims.put("userType", user.getUserType());
-
-        String token = JwtUtil.generateToken(claims);
+        String token = getToken(user);
         log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
         if (token == null || token.isEmpty()) {
 //            throw new RuntimeException("创建token失败，请稍后再试");
             return R.error("创建token失败，请稍后再试");
         }
 
+
         return R.ok("账户创建或登录成功", "Bearer " + token);
     }
 
+    private static String getToken(User user) {
+        //jwt作为token
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", "user"); // 角色可以是 user 或 admin，根据实际情况设置
+        claims.put("id", user.getId());
+        claims.put("phone", user.getPhone());
+        claims.put("userType", user.getUserType());
 
+        String token = JwtUtil.generateToken(claims);
+        return token;
+    }
 
 
     @Override
