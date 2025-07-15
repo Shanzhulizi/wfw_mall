@@ -29,6 +29,6 @@ server:
   port: 5000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.lm.user.bean     # 你的实体类包名
+  type-aliases-package: com.lm.user.domain   # 你的实体类包名
   configuration:
     map-underscore-to-camel-case: true       # 自动驼峰映射 user_type -> userType

@@ -1,14 +1,13 @@
 package com.lm.utils;
 
-import com.lm.admin.dto.AdminDTO;
-import com.lm.user.dto.UserDTO;
+import com.lm.admin.dto.AdminFilterDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class AdminContextHolder {
 
-    public static AdminDTO getAdmin() {
+    public static AdminFilterDTO getAdmin() {
 
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
@@ -22,7 +21,7 @@ public class AdminContextHolder {
             throw new RuntimeException("请求头缺少 x-admin-permission");
         }
 
-        AdminDTO admin = new AdminDTO();
+        AdminFilterDTO admin = new AdminFilterDTO();
         admin.setAdminId(Long.valueOf(request.getHeader("x-admin-id")));
         admin.setPermission(Integer.valueOf(request.getHeader("x-admin-permission")));
 

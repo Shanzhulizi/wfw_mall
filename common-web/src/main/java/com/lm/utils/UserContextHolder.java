@@ -1,6 +1,6 @@
 package com.lm.utils;
 
-import com.lm.user.dto.UserDTO;
+import com.lm.user.dto.UserFilgerDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,7 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class UserContextHolder {
 
-    public static UserDTO getUser() {
+    public static UserFilgerDTO getUser() {
 
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
@@ -22,7 +22,7 @@ public class UserContextHolder {
             // 这里可以选择抛异常或者返回null
             throw new RuntimeException("请求头缺少 x-user-id");
         }
-        UserDTO user = new UserDTO();
+        UserFilgerDTO user = new UserFilgerDTO();
         user.setId(Long.valueOf(request.getHeader("x-user-id")));
         user.setPhone(request.getHeader("x-user-phone"));
         user.setUserType(Integer.valueOf(request.getHeader("x-user-type")));

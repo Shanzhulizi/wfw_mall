@@ -13,14 +13,10 @@ public class Admin {
 
         private String password;
 
-        private String nickname;
-
-        private String phone;
-
         /**
-         * 是否超级管理员（固定为 1）
+         * 权限（固定为 1，超级管理员）
          */
-        private Integer isSuper;
+        private Integer permission;
 
         /**
          * 账号状态：1 正常，0 禁用

@@ -2,13 +2,10 @@ package com.lm.user.controller;
 
 
 import com.lm.common.R;
-import com.lm.user.domain.User;
 import com.lm.user.dto.DeleteUserDTO;
-import com.lm.user.dto.RegisterDTO;
 import com.lm.user.dto.UserLoginDTO;
-import com.lm.user.mapper.UserMapper;
+import com.lm.user.mapper.ReceiverMapper;
 import com.lm.user.service.UserService;
-import com.lm.user.utils.JwtUtil;
 import com.lm.user.utils.VertifyCodeUtil;
 import com.lm.utils.UserContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +16,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -37,7 +31,7 @@ public class UserController {
     StringRedisTemplate stringRedisTemplate;
 
     @Autowired
-    UserMapper userMapper;
+    ReceiverMapper receiverMapper;
 
     @PostMapping("/login")
     public R login(@RequestBody UserLoginDTO userLoginDTO) {
@@ -51,9 +45,7 @@ public class UserController {
             log.info("登录失败，手机号：{}，错误信息：{}", phone, r.getMsg());
             return R.error(r.getMsg());
         }
-
-        // 登录成功，生成 JWT Token
-        String token = R.error().getData().toString();
+        String token = r.getData().toString();
 
         return R.ok("登录成功", "Bearer " + token);
 
@@ -146,4 +138,41 @@ public class UserController {
         }
 
     }
+
+
+    //TODO
+
+    /**
+     * 申请称为商家
+     *
+     * @return
+     */
+    public R applyMerchant() {
+        return null;
+    }
+
+    //TODO
+
+    /**
+     * 购买会员
+     *
+     * @return
+     */
+    public R buyVip() {
+
+        return null;
+    }
+
+
+    @GetMapping("/receiverInfo/verify-address")
+    boolean verifyAddressBelongsToUser(
+            @RequestParam("userId") Long userId, @RequestParam("receiverInfoId") Long receiverInfoId) {
+        if (userId == null || receiverInfoId == null) {
+            return false;
+        }
+        // 查询数据库，检查地址是否存在且属于该用户
+        int count = receiverMapper.countByUserIdAndReceiverInfoId(userId, receiverInfoId);
+        return count > 0;
+    }
+
 }

@@ -23,6 +23,22 @@ spring:
             - Path=/api/admin/** # 拦截前缀
           filters:
             - StripPrefix=1 # 去掉 /api
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
+
+
 #
 #-------------------------------------------------
 #

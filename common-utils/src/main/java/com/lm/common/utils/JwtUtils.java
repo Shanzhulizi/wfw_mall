@@ -1,12 +1,15 @@
-package com.lm.user.utils;
+package com.lm.common.utils;
 
-import io.jsonwebtoken.*;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
+import java.security.Key;
 import java.util.Date;
 import java.util.Map;
-import java.security.Key;
 
-public class JwtUtil {
+public class JwtUtils {
 
     private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24; // 1天
     private static final String SECRET_KEY = "lm-wfw-mall-secret-key-1234567890987654321"; // 长度 >= 32 字符

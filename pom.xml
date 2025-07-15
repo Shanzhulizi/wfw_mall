@@ -18,6 +18,7 @@
         <module>services</module>
         <module>model</module>
         <module>common-web</module>
+        <module>common-utils</module>
     </modules>
 
     <properties>

@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 @Mapper
 public interface UserMapper {
 
-
-    User selectByUsername(String username);
-
     /**
      * 通过手机验证码验证后建立账号
      * @param phone

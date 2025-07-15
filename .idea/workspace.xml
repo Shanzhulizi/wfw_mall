@@ -5,10 +5,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="修改全局过滤器来新增管理员功能">
+      <change afterPath="$PROJECT_DIR$/common-utils/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/constant/RedisConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/utils/JwtUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/utils/RedisUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/dto/AdminLoginDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/OrderItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSku.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductPreloadDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductPriceValidationDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/ReceiverInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserFilgerDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/AdminMainApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/Service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/Service/StockLuaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/Service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/Service/impl/StockLuaServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/exceptionHandler/MyBlockExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/ProductFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/UserFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/ProductFeignClientFallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mapper/OrderMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/utils/OrderNoGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/mapper/OrderMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/script/deduct_stock_batch.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/order-service/src/test/java/com/lm/test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/ProductMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/ReceiverMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/ReceiverMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/AdminContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/AdminContextHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/RedisUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/domain/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/dto/AdminDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/admin/dto/AdminFilterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/mapper/AdminMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/mapper/AdminMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/resources/mapper/AdminMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/mapper/AdminMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/OrderMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/OrderMainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/UserMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/UserMainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserDeleteMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserDeleteMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/utils/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +84,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -38,44 +104,49 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.GatewayMainApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.UserMainApplication.executor&quot;: &quot;Run&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Code/Java/wfw_mall/services/user-service/src/main/resources/mapper&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.test.test.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.AdminMainApplication.executor": "Run",
+    "Spring Boot.GatewayMainApplication.executor": "Run",
+    "Spring Boot.OrderMainApplication.executor": "Run",
+    "Spring Boot.ProductMainApplication.executor": "Run",
+    "Spring Boot.UserMainApplication.executor": "Run",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/Code/Java/wfw_mall/services/user-service/src/main/resources/mapper",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Code\Java\wfw_mall\services\user-service\src\main\resources\mapper" />
-      <recent name="E:\Code\Java\wfw_mall\services\admin-service\src\main\resources" />
-      <recent name="E:\Code\Java\wfw_mall\services\admin-service\src\main\java\com\lm\admin\service" />
-      <recent name="E:\Code\Java\wfw_mall\services\auth-service\src\main\resources" />
-      <recent name="E:\Code\Java\wfw_mall\services\cart-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\order-service\src\main\resources" />
+      <recent name="E:\Code\Java\wfw_mall\services\product-service\src\main\resources\mapper" />
+      <recent name="E:\Code\Java\wfw_mall\services\order-service\src\main\resources\mapper" />
+      <recent name="E:\Code\Java\wfw_mall\services\admin-service\src\main\java\com\lm\admin" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.lm.order.exceptionHandler" />
       <recent name="com.lm.utils" />
       <recent name="com.lm.gateway.utils" />
       <recent name="com.lm.common" />
@@ -91,7 +162,36 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayMainApplication">
+  <component name="RunManager" selected="Spring Boot.OrderMainApplication">
+    <configuration name="test.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="order-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lm" />
+      <option name="MAIN_CLASS_NAME" value="com.lm.test" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdminMainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="admin-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lm.admin.AdminMainApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lm.admin.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AuthMainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="auth-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.lm.auth.AuthMainApplication" />
@@ -181,6 +281,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.UserMainApplication" />
+        <item itemvalue="JUnit.test.test" />
+        <item itemvalue="Spring Boot.AdminMainApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -202,7 +304,8 @@
       <workItem from="1752388358468" duration="10523000" />
       <workItem from="1752404135517" duration="669000" />
       <workItem from="1752471577815" duration="741000" />
-      <workItem from="1752497788020" duration="5019000" />
+      <workItem from="1752497788020" duration="14126000" />
+      <workItem from="1752563637256" duration="24389000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -260,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752501899467</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="修改全局过滤器来新增管理员功能">
+      <option name="closed" value="true" />
+      <created>1752502818392</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1752502818392</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

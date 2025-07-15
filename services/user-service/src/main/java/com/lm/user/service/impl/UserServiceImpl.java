@@ -1,14 +1,13 @@
 package com.lm.user.service.impl;
 
 import com.lm.common.R;
+import com.lm.common.utils.JwtUtils;
 import com.lm.user.domain.User;
 import com.lm.user.domain.UserDeleteLog;
-import com.lm.user.dto.UserDTO;
 import com.lm.user.dto.UserUpdateDTO;
 import com.lm.user.mapper.UserDeleteMapper;
 import com.lm.user.mapper.UserMapper;
 import com.lm.user.service.UserService;
-import com.lm.user.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -57,18 +56,19 @@ public class UserServiceImpl implements UserService {
             stringRedisTemplate.delete("register:code:" + phone);
 
             loginUser = userMapper.selectByPhone(phone);
+
         } else {
             // 手机号密码登录
-            User user = userMapper.selectByPhone(phone);
-            if (user == null) {
-                throw new RuntimeException("用户不存在");
+            loginUser = userMapper.selectByPhone(phone);
+            if (loginUser == null) {
+                return R.error("用户不存在，请先注册");
             }
             // 用 BCrypt 检查密码是否匹配
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            boolean matched = passwordEncoder.matches(password, user.getPassword());
+            boolean matched = passwordEncoder.matches(password, loginUser.getPassword());
 
             if (!matched) {
-                throw new RuntimeException("密码错误");
+                return R.error("密码错误");
             }
 
             //TODO 添加ThreadLocal
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
         claims.put("phone", user.getPhone());
         claims.put("userType", user.getUserType());
 
-        String token = JwtUtil.generateToken(claims);
+        String token = JwtUtils.generateToken(claims);
         return token;
     }
 

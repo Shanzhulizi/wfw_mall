@@ -38,34 +38,19 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>3.0.3</version> <!-- 建议使用最新稳定版 -->
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
 
 
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.11.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.11.5</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId> <!-- 使用 Jackson 作为 JSON 序列化器 -->
-            <version>0.11.5</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <!--===============================================-->
         <dependency>
             <groupId>com.lm</groupId>
             <artifactId>common-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lm</groupId>
+            <artifactId>common-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
