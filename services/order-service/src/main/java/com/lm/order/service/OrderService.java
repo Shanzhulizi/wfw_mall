@@ -1,4 +1,4 @@
-package com.lm.order.Service;
+package com.lm.order.service;
 
 import com.lm.common.R;
 import com.lm.order.dto.OrderSubmitDTO;

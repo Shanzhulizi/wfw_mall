@@ -1,6 +1,6 @@
-package com.lm.order.Service.impl;
+package com.lm.order.service.impl;
 
-import com.lm.order.Service.StockLuaService;
+import com.lm.order.service.StockLuaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;

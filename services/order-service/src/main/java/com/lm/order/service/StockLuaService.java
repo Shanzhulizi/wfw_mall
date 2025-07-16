@@ -1,4 +1,4 @@
-package com.lm.order.Service;
+package com.lm.order.service;
 
 import java.util.List;
 

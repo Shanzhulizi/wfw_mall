@@ -1,8 +1,8 @@
 spring:
   application:
-    name: order-service
+    name: stock-service
   datasource:
-    url: jdbc:mysql://localhost:3306/db_order?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/db_product?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,17 +25,11 @@ spring:
           max-idle: 8
           min-idle: 2
           max-wait: 1000ms
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
 server:
-  port: 6000
+  port: 8000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.lm.order.domain   # 你的实体类包名
+  type-aliases-package: com.lm.stock.domain   # 你的实体类包名
   configuration:
     map-underscore-to-camel-case: true       # 自动驼峰映射 user_type -> userType
+

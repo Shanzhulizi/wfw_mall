@@ -1,8 +1,10 @@
-package com.lm.order.Service.impl;
+package com.lm.order.service.impl;
 
 import com.lm.common.R;
-import com.lm.order.Service.OrderService;
-import com.lm.order.Service.StockLuaService;
+import com.lm.mq.StockDeductMessage;
+import com.lm.order.mq.sender.StockMQSender;
+import com.lm.order.service.OrderService;
+import com.lm.order.service.StockLuaService;
 import com.lm.order.domain.Order;
 import com.lm.order.domain.OrderItem;
 import com.lm.order.dto.OrderSubmitDTO;
@@ -13,6 +15,7 @@ import com.lm.order.utils.OrderNoGenerator;
 import com.lm.product.dto.ProductPriceValidationDTO;
 import com.lm.utils.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.lm.common.constant.MQConstant.STOCK_DEDUCT_ROUTING_KEY;
+import static com.lm.common.constant.MQConstant.STOCK_EVENT_EXCHANGE;
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
 @Service
@@ -45,6 +50,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserFeignClient userFeign;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private StockMQSender stockMQSender;
 
     /**
      * |→ 生成订单号
@@ -96,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
             // 校验商品价格
             ProductPriceValidationDTO pv = productMap.get(item.getSkuId());
             if (pv == null) {
-                return R.error("商品不存在" );
+                return R.error("商品不存在");
             }
             if (!pv.getPrice().equals(item.getPrice())) {
                 return R.error("商品价格有变动");
@@ -116,11 +126,18 @@ public class OrderServiceImpl implements OrderService {
             buyNums.add(item.getQuantity());
         }
         boolean success = stockLuaService.deductStock(keys, buyNums);
-        if (success) {
-            System.out.println("扣库存成功");
-        } else {
-            System.out.println("扣库存失败");
+        if (!success) {
+            log.info("redis扣减库存失败");
+            return R.error("redis扣减库存失败");
         }
+
+
+        log.info("redis扣减库存成功");
+        //TODO 发送扣减库存消息到库存服务，库存服务执行数据库扣减
+
+        // 发送消息
+        log.info("发送扣减库存消息");
+        stockMQSender.sendStockDeductMessage(orderNo, items);
 
 
         Order order = new Order();
@@ -130,7 +147,7 @@ public class OrderServiceImpl implements OrderService {
         //总金额和实付金额让前端算好往后传
         order.setTotalAmount(dto.getTotalAmount());
         order.setPayAmount(dto.getPayAmount());
-       order.setCreateTime(LocalDateTime.now());
+        order.setCreateTime(LocalDateTime.now());
         order.setUpdateTime(LocalDateTime.now());
 // 0普通订单
         order.setOrderType(0);
@@ -138,7 +155,9 @@ public class OrderServiceImpl implements OrderService {
 
         order.setReceiverInfoId(dto.getReceiverInfoId());
 
-        log.info("提交订单,{}",order);
+        log.info("提交订单,{}", order);
+        //TODO 发送订单消息到 MQ（状态：待支付）
+
 
 //        // 6. 构造订单消息并发送到 MQ（状态：待支付）
 //        OrderMQMessage msg = new OrderMQMessage(dto, userId);

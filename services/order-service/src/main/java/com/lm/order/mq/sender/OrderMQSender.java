@@ -13,13 +13,6 @@ public class OrderMQSender {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void sendOrderCreateMsg(Order order) {
-        rabbitTemplate.convertAndSend(
-                RabbitMQConfig.ORDER_EXCHANGE,
-                RabbitMQConfig.ORDER_ROUTING_KEY,
-                order
-        );
-        log.info("发送订单创建消息: {}", order.getOrderNo());
-    }
+
 }
 

@@ -2,7 +2,7 @@ package com.lm.order.controller;
 
 
 import com.lm.common.R;
-import com.lm.order.Service.OrderService;
+import com.lm.order.service.OrderService;
 import com.lm.order.dto.OrderSubmitDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
