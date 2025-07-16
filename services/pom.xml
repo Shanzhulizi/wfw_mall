@@ -24,6 +24,7 @@
         <module>admin-service</module>
         <module>logistics-service</module>
         <module>message-servicce</module>
+        <module>stock-service</module>
 
     </modules>
 
