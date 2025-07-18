@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class JwtUtils {
 
-    private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24; // 1天
+    private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24   *10; // 10天
     private static final String SECRET_KEY = "lm-wfw-mall-secret-key-1234567890987654321"; // 长度 >= 32 字符
 
     private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());

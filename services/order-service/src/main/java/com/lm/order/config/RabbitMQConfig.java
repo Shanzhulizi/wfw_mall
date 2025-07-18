@@ -6,35 +6,38 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.lm.common.constant.MQConstant.*;
+
 
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String ORDER_EXCHANGE = "order-event-exchange";
-    public static final String ORDER_QUEUE = "order.create.queue";
-    public static final String ORDER_ROUTING_KEY = "order.create";
-
+    // 订单创建交换机
     @Bean
-    public Exchange orderEventExchange() {
-        return ExchangeBuilder.directExchange(ORDER_EXCHANGE).durable(true).build();
+    public Exchange orderCreateExchange() {
+        return ExchangeBuilder.directExchange(ORDER_CREATE_EXCHANGE).durable(true).build();
     }
 
+    // 订单创建队列
     @Bean
-    public Queue orderQueue() {
-        return QueueBuilder.durable(ORDER_QUEUE).build();
+    public Queue orderCreateQueue() {
+        return QueueBuilder.durable(ORDER_CREATE_QUEUE).build();
     }
 
+    // 队列绑定交换机
     @Bean
-    public Binding orderBinding() {
+    public Binding orderCreateBinding() {
         return BindingBuilder
-                .bind(orderQueue())
-                .to(orderEventExchange())
-                .with(ORDER_ROUTING_KEY).noargs();
+                .bind(orderCreateQueue())
+                .to(orderCreateExchange())
+                .with(ORDER_CREATE_ROUTING_KEY)
+                .noargs();
     }
 
-
+    // JSON 序列化配置（必不可少）
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
 }

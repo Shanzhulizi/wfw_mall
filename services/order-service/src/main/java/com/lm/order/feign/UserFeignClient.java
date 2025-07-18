@@ -1,6 +1,7 @@
 package com.lm.order.feign;
 
 
+import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.order.feign.fallback.UserFeignClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,4 +22,7 @@ public interface UserFeignClient {
     boolean verifyAddressBelongsToUser(
             @RequestParam("userId") Long userId, @RequestParam("receiverInfoId") Long receiverInfoId);
 
+
+    @GetMapping("/user/receiverInfo/getById")
+    ReceiverInfoDTO getReceiveInfoBy(@RequestParam("receiverInfoId") Long receiverInfoId);
 }

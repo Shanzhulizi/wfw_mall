@@ -5,9 +5,16 @@
 <mapper namespace="com.lm.user.mapper.ReceiverMapper">
 
     <select id="countByUserIdAndReceiverInfoId" resultType="int">
-        select count(1) from receiver_info
-                        where user_id = #{userId} and id = #{receiverInfoId}
+        select count(1)
+        from receiver_info
+        where user_id = #{userId}
+          and id = #{receiverInfoId}
     </select>
 
+    <select id="getReceiverInfoById" resultType="com.lm.order.dto.ReceiverInfoDTO">
+        select receiver_name, phone, province, city, area, detail_address
+        from receiver_info
+        where id = #{receiverInfoId}
+    </select>
 
 </mapper>

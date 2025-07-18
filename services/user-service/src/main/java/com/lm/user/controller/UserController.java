@@ -2,6 +2,7 @@ package com.lm.user.controller;
 
 
 import com.lm.common.R;
+import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.user.dto.DeleteUserDTO;
 import com.lm.user.dto.UserLoginDTO;
 import com.lm.user.mapper.ReceiverMapper;
@@ -174,5 +175,16 @@ public class UserController {
         int count = receiverMapper.countByUserIdAndReceiverInfoId(userId, receiverInfoId);
         return count > 0;
     }
-
+    @GetMapping("/receiverInfo/getById")
+    ReceiverInfoDTO getReceiveInfoBy(@RequestParam Long receiverInfoId){
+        if (receiverInfoId == null) {
+            return null;
+        }
+        // 查询数据库，获取收货地址信息
+        ReceiverInfoDTO receiverInfo = receiverMapper.getReceiverInfoById(receiverInfoId);
+        if (receiverInfo == null) {
+            return null; // 或者抛出异常
+        }
+        return receiverInfo;
+    }
 }

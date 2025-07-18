@@ -38,6 +38,12 @@ spring:
           filters:
             - StripPrefix=1 # 去掉 /api
 
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
 
 #
 #-------------------------------------------------

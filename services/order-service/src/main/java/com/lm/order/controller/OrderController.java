@@ -38,8 +38,11 @@ public class OrderController {
     public R submitOrder(@RequestBody OrderSubmitDTO dto){
 
         R r = orderService.submitOrder(dto);
+        if (r.getCode() != 200) {
+            log.error("创建订单失败，错误信息：{}", r.getMsg());
+            return R.error(r.getMsg());
+        }
 
-
-        return R.ok();
+        return R.ok("创建订单成功",r.getData());
     }
 }
