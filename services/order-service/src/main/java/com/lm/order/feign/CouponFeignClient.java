@@ -2,10 +2,11 @@ package com.lm.order.feign;
 
 
 import com.lm.common.R;
-import com.lm.order.dto.CouponUseDTO;
 import com.lm.order.feign.fallback.CouponFeignClientFallback;
+import com.lm.promotion.dto.LockCouponsDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -13,5 +14,8 @@ import java.util.List;
 public interface CouponFeignClient {
 
     @PostMapping("/coupon/lock")
-    R lockCoupon(List<CouponUseDTO> coupons, Long userId);
+    R lockCoupon(List<Long> couponUserIds);
+
+
+
 }

@@ -20,5 +20,6 @@ public class OrderSubmitDTO {
     List<OrderItem> orderItems; // 订单项列表
     Long receiverInfoId; // 收货信息ID
 
-    private List<CouponUseDTO> coupons;  // 多张优惠券
+    private List<Long> couponUserIds;  // 多张优惠券
+    private Long fullDiscountId; // 满减活动ID
 }

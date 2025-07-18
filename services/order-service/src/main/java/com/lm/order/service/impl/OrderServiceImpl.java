@@ -1,9 +1,7 @@
 package com.lm.order.service.impl;
 
 import com.lm.common.R;
-import com.lm.mq.StockDeductMessage;
 import com.lm.order.domain.OrderShipping;
-import com.lm.order.dto.CouponUseDTO;
 import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.order.feign.CouponFeignClient;
 import com.lm.order.feign.PaymentFeignClient;
@@ -18,10 +16,9 @@ import com.lm.order.feign.UserFeignClient;
 import com.lm.order.mapper.OrderMapper;
 import com.lm.order.utils.OrderNoGenerator;
 import com.lm.order.vo.OrderVO;
-import com.lm.payment.dto.PaymentDTO;
 import com.lm.payment.dto.PaymentInfoDTO;
-import com.lm.payment.dto.PaymentResultDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
+import com.lm.promotion.dto.LockCouponsDTO;
 import com.lm.utils.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -37,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.lm.common.constant.MQConstant.STOCK_DEDUCT_ROUTING_KEY;
-import static com.lm.common.constant.MQConstant.STOCK_EVENT_EXCHANGE;
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
 @Service
@@ -143,15 +138,44 @@ public class OrderServiceImpl implements OrderService {
 //        couponFeign.lockCoupon(dto.getCouponId(), userId);
         // 优惠之后的价格
         // TODO 可能有满减，可能有折扣
-        List<CouponUseDTO> coupons = dto.getCoupons();
-        // 4. 校验并冻结优惠券
-        try {
-            couponFeignClient.lockCoupon(dto.getCoupons(), userId);
-        } catch (Exception e) {
-//            throw new BusinessException("优惠券锁定失败，无法提交订单");
-        }
+//        "couponIds": [101, 102],           // 多张优惠券
+//        "fullDiscountId": 201,                // 满减活动 ID（只能有一个）
 
+        List<Long> couponUserIds = dto.getCouponUserIds();
+        if( couponUserIds == null || couponUserIds.isEmpty()) {
+            // 没有使用优惠券
+            log.info("没有使用优惠券");
+        }
+//        LockCouponsDTO lockCouponsDTO = new LockCouponsDTO();
+//        lockCouponsDTO.setUserId(userId);
+//        lockCouponsDTO.setCouponUserIds(couponUserIds);
+        // 4. 校验并冻结优惠券
+        R result = couponFeignClient.lockCoupon(couponUserIds);
+        if (result.getCode() != 200) {
+            return R.error("优惠券锁定失败，无法提交订单");
+        }
+        //锁券之后用券
         BigDecimal payAmount = totalAmount;
+        // 先满减后折扣
+        // TODO 这里真心做不下去了，我要用的话，又得调一次优惠服务，而且是先一次循环只算满减，再一次循环算折扣
+
+
+
+        // 满减和优惠券是两码事，上面用完券还要看看有没有使用满减活动
+        // 满减不用锁，它不是用户自己的，是平台或商家的活动
+        Long fullDiscountId = dto.getFullDiscountId();
+        if( fullDiscountId != null) {
+            // TODO 这里调用满减服务
+            // 我们假设前端已经把满和减都传到后端了，这样我们就不用算了
+            // 而且我懒得再调用优惠服务来校验满减有没有效了
+            // 这里假设满减活动是有效的，直接计算满减金额
+            // 例如：满100减20
+            if(totalAmount .compareTo(new BigDecimal("100.00")) < 0) {
+                return R.error("订单金额未达到满减条件");
+            }
+            BigDecimal fullDiscountAmount = new BigDecimal("20.00"); // 假设满减金额为20元
+            payAmount = totalAmount.subtract(fullDiscountAmount);
+        }
 
         List<String> keys = new ArrayList<>();
         List<Integer> buyNums = new ArrayList<>();

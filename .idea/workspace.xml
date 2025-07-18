@@ -4,53 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="引入消息队列扣减数据库库存">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/OrderShipping.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/CouponUseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/ReceiverInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/vo/OrderVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/domain/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/dto/PaymentInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/dto/PaymentResultDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/PaymentFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/CouponFeignClientFallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/PaymentFeignClientFallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/mapper/PaymentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/PromotionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="基本完成下单流程，接下来进行优惠券操作">
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/domain/CouponUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/dto/LockCouponsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/resources/mapper/CouponUserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/promotion-service/src/main/resources/mapper/PromotionMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/constant/MQConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/utils/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/utils/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/CouponUseDTO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/UserFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/UserFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/UserFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mapper/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mapper/OrderMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/OrderMQListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/OrderMQListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/sender/OrderMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/sender/OrderMQSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/CouponFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/CouponFeignClientFallback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/impl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/impl/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/resources/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/mapper/OrderMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/ReceiverMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/ReceiverMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/ReceiverMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/ReceiverMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/PromotionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/PromotionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -95,11 +64,12 @@
     "Spring Boot.OrderMainApplication.executor": "Run",
     "Spring Boot.PaymentMainApplication.executor": "Run",
     "Spring Boot.ProductMainApplication.executor": "Run",
+    "Spring Boot.PromotionMainApplication.executor": "Run",
     "Spring Boot.StockMainApplication.executor": "Run",
     "Spring Boot.UserMainApplication.executor": "Run",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Code/Java/wfw_mall/services/stock-service/src/main/resources",
+    "last_opened_file_path": "E:/Code/Java/wfw_mall/services/promotion-service/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -122,11 +92,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Code\Java\wfw_mall\services\promotion-service\src\main\resources" />
       <recent name="E:\Code\Java\wfw_mall\services\stock-service\src\main\resources" />
       <recent name="E:\Code\Java\wfw_mall\services\user-service\src\main\resources\mapper" />
       <recent name="E:\Code\Java\wfw_mall\services\order-service\src\main\resources" />
       <recent name="E:\Code\Java\wfw_mall\services\product-service\src\main\resources\mapper" />
-      <recent name="E:\Code\Java\wfw_mall\services\order-service\src\main\resources\mapper" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Code\Java\wfw_mall\services\promotion-service\src\main\resources\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.lm.stock.service.impl" />
@@ -145,7 +118,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.OrderMainApplication">
+  <component name="RunManager" selected="Spring Boot.PromotionMainApplication">
     <configuration name="test.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="order-service" />
       <extension name="coverage">
@@ -304,7 +277,7 @@
       <workItem from="1752497788020" duration="14126000" />
       <workItem from="1752563637256" duration="34370000" />
       <workItem from="1752655797676" duration="11194000" />
-      <workItem from="1752814911469" duration="14042000" />
+      <workItem from="1752814911469" duration="22626000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -394,7 +367,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752652476061</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="基本完成下单流程，接下来进行优惠券操作">
+      <option name="closed" value="true" />
+      <created>1752836381932</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1752836381932</updated>
+    </task>
+    <task id="LOCAL-00013" summary="基本完成下单流程，接下来进行优惠券操作">
+      <option name="closed" value="true" />
+      <created>1752836395396</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1752836395396</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,6 +397,7 @@
     <MESSAGE value="完成部分下单逻辑，接下来引入消息队列" />
     <MESSAGE value="完成部分下单逻辑，预备拆分库存服务，接下来引入消息队列" />
     <MESSAGE value="引入消息队列扣减数据库库存" />
-    <option name="LAST_COMMIT_MESSAGE" value="引入消息队列扣减数据库库存" />
+    <MESSAGE value="基本完成下单流程，接下来进行优惠券操作" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本完成下单流程，接下来进行优惠券操作" />
   </component>
 </project>
