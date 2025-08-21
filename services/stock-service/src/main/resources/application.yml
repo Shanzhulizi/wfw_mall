@@ -25,6 +25,10 @@ spring:
           max-idle: 8
           min-idle: 2
           max-wait: 1000ms
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: manual  # 手动 ack
 server:
   port: 8000
 mybatis:

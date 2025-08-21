@@ -1,10 +1,10 @@
 package com.lm.product.mapper;
 
+import com.lm.product.dto.ProductCartDTO;
 import com.lm.product.dto.ProductPreloadDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import javax.management.MXBean;
 import java.util.List;
 
 @Mapper
@@ -18,4 +18,6 @@ public interface ProductMapper {
      * @return
      */
     List<ProductPriceValidationDTO> selectPriceValidationByIds(List<Long> ids);
+
+    ProductCartDTO selectProductById(Long skuId);
 }

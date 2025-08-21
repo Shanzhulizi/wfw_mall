@@ -1,19 +1,21 @@
 package com.lm.gateway.filter;
 
 import com.lm.common.utils.JwtUtils;
-import com.lm.gateway.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -21,6 +23,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private static final String TOKEN_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
+
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -31,9 +34,19 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         if (path.contains("/login") || path.contains("/register")) {
             return chain.filter(exchange); // 放行，不做 token 校验
         }
-
-
+        if (path.contains("/apply") ) {
+            return chain.filter(exchange); // 放行，不做 token 校验
+        }
         String token = request.getHeaders().getFirst(TOKEN_HEADER);
+
+        // 购物车单独过滤
+        if (path.contains("/cart")) {
+            if (token == null || token.isEmpty()) {//这里token是null，不能是 ""
+                log.warn("购物车操作未携带token");
+                return chain.filter(exchange);
+            }
+        }
+
 
 //        log.info("Received token: {}", token);
         if (token == null || !token.startsWith(BEARER_PREFIX)) {

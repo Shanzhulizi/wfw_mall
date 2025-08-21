@@ -32,4 +32,8 @@ public class StockMQSender {
         log.info("发送消息：{}",message);
         rabbitTemplate.convertAndSend(STOCK_EVENT_EXCHANGE, STOCK_DEDUCT_ROUTING_KEY, message);
     }
+
+
+
+
 }

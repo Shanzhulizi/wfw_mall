@@ -20,7 +20,9 @@ public class UserContextHolder {
         String idStr = request.getHeader("x-user-id");
         if (idStr == null || idStr.isEmpty()) {
             // 这里可以选择抛异常或者返回null
-            throw new RuntimeException("请求头缺少 x-user-id");
+//            throw new RuntimeException("请求头缺少 x-user-id");
+            // 不抛异常，返回 null 表示无登录用户
+            return new UserFilgerDTO();
         }
         UserFilgerDTO user = new UserFilgerDTO();
         user.setId(Long.valueOf(request.getHeader("x-user-id")));

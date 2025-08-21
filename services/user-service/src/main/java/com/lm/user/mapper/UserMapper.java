@@ -2,7 +2,6 @@ package com.lm.user.mapper;
 
 
 import com.lm.user.domain.User;
-import com.lm.user.dto.UserDTO;
 import com.lm.user.dto.UserUpdateDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,4 +22,8 @@ public interface UserMapper {
     int updateUserByDTO(UserUpdateDTO user);
 
     int deleteUserById(Long userId);
+
+
+
+
 }

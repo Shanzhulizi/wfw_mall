@@ -1,16 +1,14 @@
-package com.lm.auth;
-
-
+package com.lm.message;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EnableDiscoveryClient
 @SpringBootApplication
-public class AuthMainApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AuthMainApplication.class, args);
-    }
+@EnableDiscoveryClient
+public class MessageMainApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(MessageMainApplication.class, args);
+    }
 }

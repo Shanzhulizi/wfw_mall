@@ -1,19 +1,14 @@
 package com.lm.order.mq.sender;
 
-import com.lm.mq.StockDeductMessage;
-import com.lm.order.config.RabbitMQConfig;
-import com.lm.order.domain.OrderItem;
+import com.lm.order.domain.Order;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.lm.order.domain.Order;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.lm.common.constant.MQConstant.*;
+import static com.lm.common.constant.MQConstant.ORDER_CREATE_EXCHANGE;
+import static com.lm.common.constant.MQConstant.ORDER_CREATE_ROUTING_KEY;
 
 @Slf4j
 @Component

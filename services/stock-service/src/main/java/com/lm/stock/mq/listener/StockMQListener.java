@@ -5,7 +5,6 @@ import com.lm.stock.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lm.stock.config.StockMQConfig;
 import org.springframework.stereotype.Component;
 
 import static com.lm.common.constant.MQConstant.STOCK_DEDUCT_QUEUE;

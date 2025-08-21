@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lm.user.mapper.MerchantMapper">
+
+
+
+    <insert id="insertApplication" parameterType="com.lm.user.domain.MerchantApplication">
+        INSERT INTO merchant_application
+        (password, application_status, created_at, updated_at, merchant_name, contact_phone, contact_email)
+        VALUES
+            (#{password}, #{applicationStatus}, #{createdAt}, #{updatedAt}, #{merchantName}, #{contactPhone}, #{contactEmail})
+    </insert>
+
+
+
+
+
+    <select id="selectById" parameterType="long" resultType="com.lm.user.domain.MerchantApplication">
+        SELECT * FROM merchant_application WHERE id = #{id}
+    </select>
+
+
+    <update id="update" parameterType="com.lm.user.domain.MerchantApplication">
+        UPDATE merchant_application
+        SET application_status = #{applicationStatus},
+            reason = #{reason},
+            merchant_id = #{merchantId},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+
+    <insert id="insert" parameterType="com.lm.user.domain.Merchant" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO merchant(id, shop_name,password,phone, business_license, status, description,create_time)
+        VALUES (#{id}, #{shopName},#{password},#{phone}, #{businessLicense}, #{status}, #{description}, #{createTime})
+    </insert>
+
+    <select id="selectByStatus" parameterType="int" resultType="com.lm.user.domain.MerchantApplication">
+        SELECT * FROM merchant_application WHERE application_status = #{status}
+    </select>
+
+
+    <select id="selectByStatusList" parameterType="list" resultType="com.lm.user.domain.MerchantApplication">
+        SELECT *
+        FROM merchant_application
+        WHERE application_status IN
+        <foreach collection="statusList" item="status" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+
+    </select>
+
+
+    <select id="selectAll"  resultType="com.lm.user.domain.MerchantApplication">
+        SELECT * FROM merchant_application
+    </select>
+
+</mapper>

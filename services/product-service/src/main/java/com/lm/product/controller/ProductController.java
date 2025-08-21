@@ -1,6 +1,7 @@
 package com.lm.product.controller;
 
 import com.lm.common.R;
+import com.lm.product.dto.ProductCartDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
 import com.lm.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,4 +39,19 @@ public class ProductController {
 
         return list;
     }
+
+
+
+    @GetMapping("/{skuId}")
+    ProductCartDTO getProductById(@PathVariable("skuId") Long skuId){
+        ProductCartDTO productCartDTO = productService.getProductById(skuId);
+        if (productCartDTO == null) {
+            log.warn("Product not found for skuId: {}", skuId);
+            return null; // or throw an exception, or return a default value
+        }
+        return productCartDTO;
+    }
+
+
+
 }

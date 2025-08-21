@@ -51,4 +51,13 @@
     <delete id="deleteUserById">
         DELETE FROM user WHERE id = #{userId}
     </delete>
+
+
+
+
+    <insert id="insertApplication" parameterType="MerchantApplication" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO merchant_application (user_id, merchant_name, contact_phone, contact_email, application_status)
+        VALUES (#{userId}, #{merchantName}, #{contactPhone}, #{contactEmail}, 0)
+    </insert>
+
 </mapper>

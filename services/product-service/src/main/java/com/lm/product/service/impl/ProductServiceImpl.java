@@ -1,5 +1,6 @@
 package com.lm.product.service.impl;
 
+import com.lm.product.dto.ProductCartDTO;
 import com.lm.product.dto.ProductPreloadDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
 import com.lm.product.mapper.ProductMapper;
@@ -43,5 +44,21 @@ public class ProductServiceImpl implements ProductService {
         }
         return productMapper.selectPriceValidationByIds(ids);
 
+    }
+
+    @Override
+    public ProductCartDTO getProductById(Long skuId) {
+        if (skuId == null) {
+            log.warn("SKU ID is null, cannot fetch product details.");
+            return null; // or throw an exception, or return a default value
+        }
+        ProductCartDTO productCartDTO = productMapper.selectProductById(skuId);
+        if (productCartDTO != null) {
+            log.info("Fetched product details for SKU ID: {}", skuId);
+            return productCartDTO;
+        } else {
+            log.warn("No product found for SKU ID: {}", skuId);
+        }
+        return null;
     }
 }

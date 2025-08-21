@@ -1,24 +1,23 @@
 package com.lm.order.service.impl;
 
 import com.lm.common.R;
+import com.lm.order.domain.Order;
+import com.lm.order.domain.OrderItem;
 import com.lm.order.domain.OrderShipping;
+import com.lm.order.dto.OrderSubmitDTO;
 import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.order.feign.CouponFeignClient;
 import com.lm.order.feign.PaymentFeignClient;
-import com.lm.order.mq.sender.StockMQSender;
-import com.lm.order.service.OrderService;
-import com.lm.order.service.StockLuaService;
-import com.lm.order.domain.Order;
-import com.lm.order.domain.OrderItem;
-import com.lm.order.dto.OrderSubmitDTO;
 import com.lm.order.feign.ProductFeignClient;
 import com.lm.order.feign.UserFeignClient;
 import com.lm.order.mapper.OrderMapper;
+import com.lm.order.mq.sender.StockMQSender;
+import com.lm.order.service.OrderService;
+import com.lm.order.service.StockLuaService;
 import com.lm.order.utils.OrderNoGenerator;
 import com.lm.order.vo.OrderVO;
 import com.lm.payment.dto.PaymentInfoDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
-import com.lm.promotion.dto.LockCouponsDTO;
 import com.lm.utils.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,6 +26,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private StockLuaService stockLuaService;
 
-    @Autowired
+    @Resource
     private UserFeignClient userFeign;
 
     @Autowired
@@ -311,7 +311,7 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = convert(order);
         orderVO.setPayUrl(paymentDTO.getPayUrl());
 
-        //补充订单信息（用sku）
+        //TODO 写入一条 延迟消息（如 30分钟）：用于“支付超时自动关闭订单”
 
         return R.ok("创建订单成功", orderVO);
 

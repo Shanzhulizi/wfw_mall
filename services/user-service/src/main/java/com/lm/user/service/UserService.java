@@ -1,7 +1,6 @@
 package com.lm.user.service;
 
 import com.lm.common.R;
-import com.lm.user.domain.User;
 
 public interface UserService {
 
@@ -15,4 +14,6 @@ public interface UserService {
     void deleteUser(Long userId, String deleteReason, String ip, String userAgent, String phone, int userType);
 
     R loginWithPasswordOrCode(String phone, String password, String code);
+
+
 }

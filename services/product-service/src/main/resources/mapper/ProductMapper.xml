@@ -19,4 +19,12 @@
             #{id}
         </foreach>
     </select>
+
+
+    <select id="selectProductById" resultType="com.lm.product.dto.ProductCartDTO">
+        SELECT sku_name, price, image
+        FROM product_sku
+        WHERE id = #{skuId}
+    </select>
+
 </mapper>

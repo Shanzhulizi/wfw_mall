@@ -2,7 +2,6 @@ package com.lm.promotion.com.lm.promotion.controller;
 
 import com.lm.common.R;
 import com.lm.promotion.com.lm.promotion.service.PromotionService;
-import com.lm.promotion.dto.LockCouponsDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

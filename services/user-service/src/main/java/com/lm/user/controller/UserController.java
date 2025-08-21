@@ -11,7 +11,6 @@ import com.lm.user.utils.VertifyCodeUtil;
 import com.lm.utils.UserContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -140,17 +139,14 @@ public class UserController {
 
     }
 
+    //上传头像
+    public R uploadAvatar() {
 
-    //TODO
 
-    /**
-     * 申请称为商家
-     *
-     * @return
-     */
-    public R applyMerchant() {
         return null;
     }
+
+
 
     //TODO
 
@@ -165,6 +161,8 @@ public class UserController {
     }
 
 
+    //----下面是外部调用------------------------------
+
     @GetMapping("/receiverInfo/verify-address")
     boolean verifyAddressBelongsToUser(
             @RequestParam("userId") Long userId, @RequestParam("receiverInfoId") Long receiverInfoId) {
@@ -175,8 +173,9 @@ public class UserController {
         int count = receiverMapper.countByUserIdAndReceiverInfoId(userId, receiverInfoId);
         return count > 0;
     }
+
     @GetMapping("/receiverInfo/getById")
-    ReceiverInfoDTO getReceiveInfoBy(@RequestParam Long receiverInfoId){
+    ReceiverInfoDTO getReceiveInfoBy(@RequestParam Long receiverInfoId) {
         if (receiverInfoId == null) {
             return null;
         }
@@ -187,4 +186,6 @@ public class UserController {
         }
         return receiverInfo;
     }
+
+
 }

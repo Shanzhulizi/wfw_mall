@@ -1,6 +1,5 @@
 package com.lm.order.domain;
 
-import com.lm.user.domain.ReceiverInfo;
 import lombok.Data;
 
 import java.math.BigDecimal;

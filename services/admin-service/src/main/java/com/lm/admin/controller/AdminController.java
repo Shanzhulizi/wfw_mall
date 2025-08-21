@@ -2,16 +2,17 @@ package com.lm.admin.controller;
 
 import com.lm.admin.dto.AdminLoginDTO;
 import com.lm.admin.service.AdminService;
+import com.lm.admin.service.MerchantApplicationService;
 import com.lm.common.R;
+import com.lm.user.domain.MerchantApplication;
+import com.lm.user.dto.AuditDTO;
 import com.lm.user.dto.DeleteUserDTO;
-import com.lm.user.dto.UserLoginDTO;
-import com.lm.utils.UserContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("/admin")
@@ -21,6 +22,8 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+    @Autowired
+    private MerchantApplicationService merchantApplicationService;
 
     @PostMapping("/login")
     public R login(@RequestBody AdminLoginDTO adminLoginDTO) {
@@ -47,22 +50,55 @@ public class AdminController {
      */
     @PostMapping("/ban")
     public R ban(@RequestBody DeleteUserDTO dto, HttpServletRequest request) {
-
         return null;
+    }
+
+    /**
+     * 列举所有审核中申请
+     */
+    @GetMapping("/applications/pending")
+    public List<MerchantApplication> listPending() {
+        return merchantApplicationService.listByStatus(0);
+    }
+
+    /**
+     * 列举所有 审核完成 的申请（通过 + 拒绝）
+     * 去用户服务查询
+     *
+     * @return
+     */
+    @GetMapping("/applications/reviewed")
+    public List<MerchantApplication> listReviewed() {
+        return merchantApplicationService.listReviewed();
+    }
+
+    /**
+     * 列举 所有申请
+     *
+     * @return
+     */
+    @GetMapping("/applications/all")
+    public List<MerchantApplication> listAll() {
+        return merchantApplicationService.listAll();
     }
 
     /**
      * 批准或拒绝商家申请
      */
-    public R replyApplication(){
-
-        return null;
+    @PostMapping("/application/audit")
+    public R replyApplication(@RequestBody AuditDTO auditDTO) {
+        Long id = auditDTO.getId();
+        Integer status = auditDTO.getStatus();
+        String reason = auditDTO.getReason();
+        merchantApplicationService.audit(id, status, reason);
+//        adminService.audit(id, status, reason);
+        return R.ok("审核完成");
     }
 
     /**
      * 发放优惠券
      */
-    public R giveCoupon(){
+    public R giveCoupon() {
 
         return null;
     }
@@ -71,7 +107,7 @@ public class AdminController {
     /**
      * 上架秒杀活动
      */
-    public R SeckillActivity(){
+    public R SeckillActivity() {
 
         return null;
     }
@@ -79,10 +115,11 @@ public class AdminController {
 
     /**
      * 这里我的构想本来应该是管理员调用这个方法的，但是我想先在product服务里实现这个功能再说
+     *
      * @return
      */
     @GetMapping("/preloadStock")
-    public R  preloadStockToRedis(){
+    public R preloadStockToRedis() {
 //        productService.preloadStockToRedis();
 //        return R.ok("商品库存预热完成");
         return null;

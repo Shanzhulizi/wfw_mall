@@ -12,9 +12,16 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/user/** # 拦截前缀
+            - Path=/api/user/**
           filters:
-            - StripPrefix=1 # 去掉 /api
+            - StripPrefix=1
+
+        - id: merchant-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/merchant/**
+          filters:
+            - StripPrefix=1
 
 
         - id: admin-service
@@ -45,6 +52,12 @@ spring:
           filters:
             - StripPrefix=1 # 去掉 /api
 
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/cart/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
 #
 #-------------------------------------------------
 #

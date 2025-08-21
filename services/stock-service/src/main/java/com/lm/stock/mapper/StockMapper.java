@@ -3,7 +3,6 @@ package com.lm.stock.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.web.bind.annotation.Mapping;
 
 
 

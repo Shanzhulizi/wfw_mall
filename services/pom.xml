@@ -19,7 +19,6 @@
         <module>search-service</module>
         <module>promotion-service</module>
         <module>file-service</module>
-        <module>auth-service</module>
         <module>order-service</module>
         <module>admin-service</module>
         <module>logistics-service</module>

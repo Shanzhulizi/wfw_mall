@@ -1,10 +1,8 @@
 package com.lm.order.mq.listener;
 
-import com.lm.order.config.RabbitMQConfig;
 import com.lm.order.domain.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-
 import org.springframework.stereotype.Component;
 
 import static com.lm.common.constant.MQConstant.ORDER_CREATE_QUEUE;

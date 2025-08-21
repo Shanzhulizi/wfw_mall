@@ -31,6 +31,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+    virtual-host: /
+    publisher-confirm-type: correlated   # 开启确认机制
+    publisher-returns: true             # 开启回退机制
 
 server:
   port: 6000
