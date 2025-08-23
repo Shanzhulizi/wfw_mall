@@ -3,6 +3,7 @@ package com.lm.product.service.impl;
 import com.lm.product.dto.ProductCartDTO;
 import com.lm.product.dto.ProductPreloadDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
+import com.lm.product.dto.ProductRecommendDTO;
 import com.lm.product.mapper.ProductMapper;
 import com.lm.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -61,4 +62,12 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public List<ProductRecommendDTO> getRecommendedProducts(int page, int size) {
+        int offset = (page - 1) * size;
+        return productMapper.findRecommended(offset, size);
+    }
+
+
 }

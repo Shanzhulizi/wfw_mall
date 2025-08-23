@@ -37,6 +37,12 @@ spring:
             - Path=/api/product/** # 拦截前缀
           filters:
             - StripPrefix=1 # 去掉 /api
+        - id: category-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/category/**
+          filters:
+            - StripPrefix=1
 
         - id: order-service
           uri: lb://order-service
@@ -56,6 +62,14 @@ spring:
           uri: lb://cart-service
           predicates:
             - Path=/api/cart/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
+
+
+        - id: search-service
+          uri: lb://search-service
+          predicates:
+            - Path=/api/search/** # 拦截前缀
           filters:
             - StripPrefix=1 # 去掉 /api
 #

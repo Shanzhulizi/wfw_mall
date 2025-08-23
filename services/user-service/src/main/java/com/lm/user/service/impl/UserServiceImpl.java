@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         if (password == null || password.isEmpty()) {
             // 手机号验证码登录
             // 从 Redis 中获取验证码
-            String redisCode = stringRedisTemplate.opsForValue().get("register:code:" + phone);
+            String redisCode = stringRedisTemplate.opsForValue().get("login:code:" + phone);
             if (redisCode == null) {
                 return R.error("验证码已过期或不存在");
             }
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 return R.error("验证码不正确");
             }
             // 验证通过后，删除 Redis 中的验证码
-            stringRedisTemplate.delete("register:code:" + phone);
+            stringRedisTemplate.delete("login:code:" + phone);
 
             loginUser = userMapper.selectByPhone(phone);
 
@@ -78,6 +78,10 @@ public class UserServiceImpl implements UserService {
             // 登录成功后，设置用户信息到 ThreadLocal
 
         }
+        //TODO 通过后把购物车的内容同步到用户的购物车
+        //调用购物车服务
+
+
         //无论何种方式，只要通过都要返回token
         //jwt作为token
         String token = getToken(loginUser);

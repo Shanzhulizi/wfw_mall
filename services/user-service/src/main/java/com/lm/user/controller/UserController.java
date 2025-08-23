@@ -40,6 +40,7 @@ public class UserController {
         String code = userLoginDTO.getCode();
         R r = userService.loginWithPasswordOrCode(phone, password, code);
 
+
         Integer statusCode = r.getCode();
         if (statusCode != 200) {
             log.info("登录失败，手机号：{}，错误信息：{}", phone, r.getMsg());
@@ -51,8 +52,25 @@ public class UserController {
 
     }
 
-    @PostMapping("/register")
-    public R register(@RequestParam String phone) {
+    @PostMapping("/sendLoginCode")
+    public R sendLoginCode(@RequestParam String phone) {
+        //TODO 调用第三方服务发送验证码
+        //我没钱，所以我把它放到了model里面
+        String code = new VertifyCodeUtil().sendVerificationCode(phone);
+        if (code == null) {
+            return R.error("验证码发送失败，请稍后再试");
+        }
+        log.info("验证码发送成功，手机号：{}，验证码：{}", phone, code);
+        // 将验证码存入 Redis，设置过期时间为5分钟
+        stringRedisTemplate.opsForValue()
+                .set("login:code:" + phone, code, 5 * 60, TimeUnit.SECONDS);
+
+        return R.ok("验证码发送成功");
+    }
+
+
+    @PostMapping("/sendRegisterCode")
+    public R sendRegisterCode(@RequestParam String phone) {
 //        log.info("User registration attempt with username: {}", registerDTO.getUsername());
 
         //TODO 调用第三方服务发送验证码
@@ -70,8 +88,8 @@ public class UserController {
         return R.ok("验证码发送成功");
     }
 
-    @PostMapping("/register/verify")
-    public R verify(@RequestParam String code, @RequestParam String phone) {
+    @PostMapping("/register")
+    public R register(@RequestParam String code, @RequestParam String phone) {
         // 从 Redis 中获取验证码
         String redisCode = stringRedisTemplate.opsForValue().get("register:code:" + phone);
         if (redisCode == null) {

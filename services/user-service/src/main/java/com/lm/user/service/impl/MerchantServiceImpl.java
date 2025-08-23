@@ -1,5 +1,6 @@
 package com.lm.user.service.impl;
 
+import com.lm.common.utils.IdGenerator;
 import com.lm.user.domain.Merchant;
 import com.lm.user.domain.MerchantApplication;
 import com.lm.user.mapper.MerchantMapper;
@@ -48,10 +49,9 @@ public class MerchantServiceImpl implements MerchantService {
         app.setReason(reason);
 
         if (status == 1) {
-            // 生成商家ID（假设调用商家服务/表）
-            Long merchantId = System.currentTimeMillis(); // TODO: 替换为真实的商家ID生成逻辑
-            // 生产营业执照
-            Long businessLicense = System.currentTimeMillis();
+
+            IdGenerator idGen = new IdGenerator(1,1);
+            Long merchantId = idGen.nextId();
             app.setMerchantId(merchantId);
             app.setUpdatedAt(LocalDateTime.now());
             Merchant merchant = new Merchant();
@@ -59,7 +59,7 @@ public class MerchantServiceImpl implements MerchantService {
             merchant.setPhone(app.getContactPhone());
             merchant.setPassword(app.getPassword()); // 使用加密后的密码
             merchant.setShopName(app.getMerchantName());
-            merchant.setBusinessLicense(businessLicense.toString()); // 假设营业执照是一个字符串
+//            merchant.setBusinessLicense(businessLicense.toString()); // 假设营业执照是一个字符串
             merchant.setStatus(1); // 正常营业
             // 商家描述空着，以后让商家自己去完善
             merchant.setCreateTime(LocalDateTime.now()); // 设置创建时间为当前时间

@@ -114,24 +114,4 @@ public class CartServiceImpl implements CartService {
         return cartItems;
     }
 
-//    @Override
-//    public List<CartItem> listCart(Long userId) {
-//        if(userId == null) {
-//            return Collections.emptyList();
-//        }else{
-//
-//        }
-//        List<Object> values = stringRedisTemplate.opsForHash().values("cart:" + userId);
-//        if(values == null|| values.isEmpty()){
-//            return Collections.emptyList();
-//        }
-//        List<CartItem> cartItems = new ArrayList<>();
-//        for (Object value : values) {
-//            if (value instanceof String) {
-//                CartItem item = JSON.parseObject((String) value, CartItem.class);
-//                cartItems.add(item);
-//            }
-//        }
-//        return cartItems;
-//    }
 }

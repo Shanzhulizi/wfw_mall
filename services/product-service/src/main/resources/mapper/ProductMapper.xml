@@ -27,4 +27,13 @@
         WHERE id = #{skuId}
     </select>
 
+
+    <select id="findRecommended" resultType="com.lm.product.dto.ProductRecommendDTO">
+        SELECT
+         id,name, description, main_image, sale_count
+        FROM product_spu
+        WHERE is_recommended = 1 and status = 1
+        ORDER BY RAND()
+        LIMIT #{size} OFFSET #{offset}
+    </select>
 </mapper>

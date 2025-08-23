@@ -12,6 +12,12 @@ spring:
       config:
         import-check:
           enabled: false
+
+# Elasticsearch 配置
+elasticsearch:
+  host: localhost
+  port: 9200
+  scheme: http
 #  data:
 #    redis:
 #      host: 127.0.0.1

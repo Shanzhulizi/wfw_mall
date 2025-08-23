@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Slf4j
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
@@ -31,7 +28,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
         String path = request.getURI().getPath();
         // 1. 放行登录和注册请求
-        if (path.contains("/login") || path.contains("/register")) {
+        if (path.contains("/login") || path.contains("/register")|| path.contains("/sendRegisterCode")|| path.contains("/sendLoginCode")) {
             return chain.filter(exchange); // 放行，不做 token 校验
         }
         if (path.contains("/apply") ) {
@@ -50,7 +47,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
 //        log.info("Received token: {}", token);
         if (token == null || !token.startsWith(BEARER_PREFIX)) {
-            log.warn("未携带token 或者token不是以Bearer开头");
+
+            log.warn(token +"未携带token 或者token不是以Bearer开头");
             // 如果没有携带token，直接返回401
             ServerHttpResponse response = exchange.getResponse();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);

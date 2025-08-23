@@ -1,8 +1,11 @@
 package com.lm.product.controller;
 
 import com.lm.common.R;
+import com.lm.es.ESProduct;
 import com.lm.product.dto.ProductCartDTO;
 import com.lm.product.dto.ProductPriceValidationDTO;
+import com.lm.product.dto.ProductRecommendDTO;
+import com.lm.product.mapper.ProductMapper;
 import com.lm.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +54,29 @@ public class ProductController {
         }
         return productCartDTO;
     }
+    // 获取推荐商品（分页，下拉刷新用）
+//    @GetMapping("/recommend")
+//    public List<ProductRecommendDTO> getRecommendedProducts(
+//            @RequestParam(defaultValue = "1") int page,
+//            @RequestParam(defaultValue = "10") int size) {
+//        return productService.getRecommendedProducts(page, size);
+//    }
+    @GetMapping("/recommend")
+    public R getRecommendedProducts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<ProductRecommendDTO> products = productService.getRecommendedProducts(page, size);
+        return R.ok("返回推荐",products);
+    }
 
 
 
+
+    @Autowired
+    private ProductMapper productMapper;
+    //外部调用
+    @GetMapping("/listAllForSearch")
+    public List<ESProduct> listAllForSearch() {
+        return productMapper.listAllForSearch();
+    }
 }
