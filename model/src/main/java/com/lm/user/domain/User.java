@@ -21,7 +21,6 @@ public class User {
      * 用户类型：
      * 0 - 普通用户
      * 1 - VIP用户
-     * 2 - 商家
      */
     private Integer userType;
 
@@ -30,10 +29,7 @@ public class User {
      */
     private LocalDateTime vipExpireTime;
 
-    /**
-     * 商户ID，仅在 userType = 2 时有值
-     */
-    private Long merchantId;
+
 
     private LocalDateTime createTime;
 

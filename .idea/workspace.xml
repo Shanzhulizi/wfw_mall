@@ -4,38 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="加入管理员审批商家申请逻辑">
-      <change afterPath="$PROJECT_DIR$/common-utils/src/main/java/com/lm/common/utils/IdGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/ESProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductRecommendDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductShowDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/CategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/CategoryMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/CategoryMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/ElasticsearchConfig.java" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="加入搜索功能，加入前端页面">
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/dto/UserInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/CouponFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/fallback/CouponFeignClientFallback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/MerchantApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/MerchantApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/impl/MerchantApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/service/impl/MerchantApplicationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/service/impl/CartServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/ProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/ProductMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/SearchServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/user/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/UserMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/UserMainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,11 +113,11 @@
       <recent name="E:\Code\Java\wfw_mall\services\promotion-service\src\main\resources\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.lm.user.feign" />
+      <recent name="com.lm.user.feign.fallback" />
       <recent name="com.lm.user.domain" />
       <recent name="com.lm.admin.service.impl" />
       <recent name="com.lm.stock.service.impl" />
-      <recent name="com.lm.stock.service" />
-      <recent name="com.lm.order.exceptionHandler" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -142,7 +129,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ProductMainApplication">
+  <component name="RunManager" selected="Spring Boot.UserMainApplication">
     <configuration name="test.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="order-service" />
       <extension name="coverage">
@@ -336,7 +323,8 @@
       <workItem from="1755781854126" duration="9320000" />
       <workItem from="1755797752755" duration="5742000" />
       <workItem from="1755881763970" duration="843000" />
-      <workItem from="1755946126659" duration="21820000" />
+      <workItem from="1755946126659" duration="22026000" />
+      <workItem from="1756002606401" duration="11459000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -458,7 +446,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755803352613</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="加入搜索功能，加入前端页面">
+      <option name="closed" value="true" />
+      <created>1755985825699</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1755985825699</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,6 +472,32 @@
     <MESSAGE value="进行部分优惠券逻辑填写" />
     <MESSAGE value="准备加入管理员审批商家申请逻辑" />
     <MESSAGE value="加入管理员审批商家申请逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入管理员审批商家申请逻辑" />
+    <MESSAGE value="加入搜索功能，加入前端页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入搜索功能，加入前端页面" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java</url>
+          <line>219</line>
+          <properties class="com.lm.user.controller.UserController" method="getUserInfo">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java</url>
+          <line>266</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java</url>
+          <line>273</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -4,20 +4,26 @@ import com.lm.common.R;
 import com.lm.common.utils.JwtUtils;
 import com.lm.user.domain.User;
 import com.lm.user.domain.UserDeleteLog;
+import com.lm.user.dto.UserInfoDTO;
 import com.lm.user.dto.UserUpdateDTO;
+import com.lm.user.feign.CouponFeignClient;
 import com.lm.user.mapper.UserDeleteMapper;
 import com.lm.user.mapper.UserMapper;
 import com.lm.user.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -31,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    CouponFeignClient couponFeignClient;
+
     @Override
     public R loginWithPasswordOrCode(String phone, String password, String code) {
 
@@ -85,18 +94,24 @@ public class UserServiceImpl implements UserService {
         //无论何种方式，只要通过都要返回token
         //jwt作为token
         String token = getToken(loginUser);
-        log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
+
+// 这里我们用 userId 作为 key，存 token 作为 value
+        String key = "login:token:" + loginUser.getId();
+
+// 存入 Redis，并设置过期时间，比如 30 分钟
+        stringRedisTemplate.opsForValue().set(key, token, 30, TimeUnit.MINUTES);
+        log.info("创建token成功，手机号：{}，生成的token：{}", phone, token);
         if (token == null || token.isEmpty()) {
             return R.error("创建token失败，请稍后再试");
         }
 
-        return R.ok("登录成功",  token);
+        return R.ok("登录成功", token);
 
     }
 
 
     @Override
-    public R createAccountOrLoginWithPhone(String phone) {
+    public R createAccountWithPhone(String phone) {
         // 设置创建时间
         LocalDateTime now = LocalDateTime.now();
         User user = userMapper.selectByPhone(phone);
@@ -109,21 +124,15 @@ public class UserServiceImpl implements UserService {
                 log.info("创建账户失败，手机号：{}", phone);
                 return R.error("创建账户失败，请稍后再试");
             }
-            user = userMapper.selectByPhone(phone);
         } else {
-            //直接登录
-
-        }
-
-        String token = getToken(user);
-        log.info("创建账户成功，手机号：{}，生成的token：{}", phone, "Bearer " + token);
-        if (token == null || token.isEmpty()) {
-//            throw new RuntimeException("创建token失败，请稍后再试");
-            return R.error("创建token失败，请稍后再试");
+            return R.error("账户已存在，请直接登录");
         }
 
 
-        return R.ok("账户创建或登录成功", "Bearer " + token);
+        log.info("创建账户成功，手机号：{}", phone);
+
+
+        return R.ok("账户创建成功", phone);
     }
 
     private static String getToken(User user) {
@@ -135,7 +144,7 @@ public class UserServiceImpl implements UserService {
         claims.put("userType", user.getUserType());
 
         String token = JwtUtils.generateToken(claims);
-        return token;
+        return "Bearer " + token;
     }
 
 
@@ -202,9 +211,70 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public boolean isLogin(String token) {
+        if (StringUtils.isEmpty(token)) {
+            return false;
+        }
+
+        try {
+            // 验证token有效性
+            Claims claims = JwtUtils.parseToken(token.replace("Bearer ", ""));
+            Long userId = Long.valueOf(claims.get("id").toString());
+
+//            // 可选：检查token是否在黑名单中（如退出登录的token）
+//            if (stringRedisTemplate.hasKey("blacklist:" + token)) {
+//                return false;
+//            }
+
+            // 可选：检查用户状态是否正常
+            User user = userMapper.getById(userId);
+            if (user == null) {
+                return false;
+//                return R.error("用户不存在或已被禁用");
+            }
+
+            return true;
+
+        } catch (ExpiredJwtException e) {
+            throw new RuntimeException("token已过期");
+        } catch (Exception e) {
+            throw new RuntimeException("token无效");
+        }
+    }
+
+    @Override
+    public void logout(Long userId) {
+        String key = "login:token:" + userId;
+        stringRedisTemplate.delete(key);
+    }
+
+    @Override
+    public String loginAfterRegisterSuccess(String phone) {
+        User user = userMapper.selectByPhone(phone);
+
+        String token = getToken(user);
+
+        stringRedisTemplate.opsForValue().set("login:token:" + user.getId(), token, 30, TimeUnit.MINUTES);
+
+        return token;
+    }
+
+    @Override
+    public UserInfoDTO getUserInfo(Long userId) {
+
+        //从user表获取
+        UserInfoDTO userInfo = userMapper.getUserInfoById(userId);
 
 
+        //调用promotion-service获取
+        int couponCount = 0; // 假设从promotion-service获取的优惠券数量
+        Object data = couponFeignClient.getCouponCountByUserId(userId).getData();
 
+        couponCount = data == null ? 0 : Integer.parseInt(data.toString());
 
+        userInfo.setCouponCount(couponCount);
 
+        return userInfo;
+    }
 }

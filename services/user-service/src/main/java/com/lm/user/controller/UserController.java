@@ -4,6 +4,7 @@ package com.lm.user.controller;
 import com.lm.common.R;
 import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.user.dto.DeleteUserDTO;
+import com.lm.user.dto.UserInfoDTO;
 import com.lm.user.dto.UserLoginDTO;
 import com.lm.user.mapper.ReceiverMapper;
 import com.lm.user.service.UserService;
@@ -48,7 +49,7 @@ public class UserController {
         }
         String token = r.getData().toString();
 
-        return R.ok("登录成功", "Bearer " + token);
+        return R.ok("登录成功", token);
 
     }
 
@@ -104,14 +105,18 @@ public class UserController {
         // 验证通过后，删除 Redis 中的验证码
         stringRedisTemplate.delete("register:code:" + phone);
 
-        // 没有则向数据库插入用户记录，有的话直接登录
-        R result = userService.createAccountOrLoginWithPhone(phone);
+        // 向数据库插入用户记录
+        R result = userService.createAccountWithPhone(phone);
+
+        //注册成功后直接登录，不必再去登录界面请求验证码
         if (result.getCode().equals(200)) {
-            String token = (String) result.getData();
-            return R.ok("注册登录成功", token);
+            log.info("注册成功，手机号：{}", phone);
+            //进入登录逻辑
+            String token = userService.loginAfterRegisterSuccess(phone);
+            return R.ok("注册成功", token);
         } else {
             // 如果返回结果是错误的，直接返回错误信息
-            log.info("注册登录失败，手机号：{}，错误信息：{}", phone, result.getMsg());
+            log.info("注册失败，手机号：{}，错误信息：{}", phone, result.getMsg());
             return R.error(result.getMsg());
         }
 
@@ -131,8 +136,26 @@ public class UserController {
         }
     }
 
+    @PostMapping("logout")
+    public R logout(HttpServletRequest request) {
+        // 从请求头获取token
+//        String token = request.getHeader("Authorization");
+        Long userId = UserContextHolder.getUser().getId();
+
+        try {
+            // 调用用户服务的注销方法
+            userService.logout(userId);
+            return R.ok("注销成功");
+        } catch (Exception e) {
+            log.error("注销失败，用户：{}", userId, e);
+            return R.error("注销失败，原因：" + e.getMessage());
+        }
+    }
+
+
     /**
      * 虽然是删除用户，但是需要前端的用户提供删除原因，要用请求体，所以用了Post
+     * 应该是注销吧，我记不太清了
      *
      * @param dto
      * @param request
@@ -165,7 +188,6 @@ public class UserController {
     }
 
 
-
     //TODO
 
     /**
@@ -178,7 +200,33 @@ public class UserController {
         return null;
     }
 
+    // 检查登录状态的接口
+    @GetMapping("/checkLogin")
+    public R checkLogin(HttpServletRequest request) {
+        // 从请求头获取token
+        String token = request.getHeader("Authorization");
 
+        try {
+            boolean isLogin = userService.isLogin(token);
+            return isLogin ? R.ok("已登录") : R.error("未登录");
+        } catch (Exception e) {
+            return R.error("检查登录状态失败");
+        }
+
+
+    }
+
+    @GetMapping("/info")
+    public R getUserInfo() {
+        // 从请求头获取token
+        Long userId = UserContextHolder.getUser().getId();
+
+        UserInfoDTO userInfoDTO = userService.getUserInfo(userId);
+        if (userInfoDTO == null) {
+            return R.error("获取用户信息失败");
+        }
+        return R.ok("获取用户信息成功", userInfoDTO);
+    }
     //----下面是外部调用------------------------------
 
     @GetMapping("/receiverInfo/verify-address")

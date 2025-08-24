@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface PromotionService {
     void lockCoupon(List<Long> couponUserIds);
+
+    int getCouponCountByUserId(Long userId);
 }

@@ -2,8 +2,10 @@ package com.lm.user.mapper;
 
 
 import com.lm.user.domain.User;
+import com.lm.user.dto.UserInfoDTO;
 import com.lm.user.dto.UserUpdateDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +26,8 @@ public interface UserMapper {
     int deleteUserById(Long userId);
 
 
+    @Select("SELECT * FROM user WHERE id = #{userId}")
+    User getById(Long userId);
 
-
+    UserInfoDTO getUserInfoById(Long userId);
 }

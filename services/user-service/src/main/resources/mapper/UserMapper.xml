@@ -52,12 +52,19 @@
         DELETE FROM user WHERE id = #{userId}
     </delete>
 
-
-
-
     <insert id="insertApplication" parameterType="MerchantApplication" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO merchant_application (user_id, merchant_name, contact_phone, contact_email, application_status)
         VALUES (#{userId}, #{merchantName}, #{contactPhone}, #{contactEmail}, 0)
     </insert>
+
+
+    <select id="getUserInfoById" resultType="com.lm.user.dto.UserInfoDTO" >
+        select id, username,avatar_url,user_type, vip_expire_time
+        from user
+        where id = #{userId}
+
+    </select>
+
+
 
 </mapper>

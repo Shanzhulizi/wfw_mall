@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(value = "coupon-service", fallback = CouponFeignClientFallback.class) // feign客户端
+@FeignClient(value = "promotion-service", fallback = CouponFeignClientFallback.class) // feign客户端
 public interface CouponFeignClient {
 
     @PostMapping("/coupon/lock")

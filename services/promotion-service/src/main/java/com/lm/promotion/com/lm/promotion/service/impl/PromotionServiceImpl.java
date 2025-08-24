@@ -39,4 +39,10 @@ public class PromotionServiceImpl implements PromotionService {
 
 
     }
+
+    @Override
+    public int getCouponCountByUserId(Long userId) {
+        couponUserMapper.selectCountByUserId(userId);
+        return 0;
+    }
 }
