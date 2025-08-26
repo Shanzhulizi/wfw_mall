@@ -40,6 +40,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version> <!-- 请使用最新版本 -->
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>3.5.6</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>

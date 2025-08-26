@@ -2,11 +2,7 @@ package com.lm.feign.fallback;
 
 
 import com.lm.common.R;
-import com.lm.es.domain.ESProduct;
 import com.lm.feign.ProductFeignClient;
-import com.lm.product.domain.PageResult;
-
-import java.util.List;
 
 public class ProductFeignClientFallback implements ProductFeignClient {
 

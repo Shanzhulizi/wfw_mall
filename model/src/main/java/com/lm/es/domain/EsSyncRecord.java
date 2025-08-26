@@ -1,11 +1,12 @@
 package com.lm.es.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-//@TableName("es_sync_record")
+@TableName("es_sync_record")
 public class EsSyncRecord {
     private Long id;
     private Long spuId;

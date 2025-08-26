@@ -1,9 +1,6 @@
 package com.lm.product.service;
 
-import com.lm.es.domain.ESProduct;
-import com.lm.product.domain.PageResult;
 import com.lm.product.dto.*;
-import com.lm.product.vo.ProductDetailVO;
 
 import java.util.Date;
 import java.util.List;

@@ -4,21 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="添加从mysql上传数据到ES的功能">
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/EsSyncRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/mapper/EsSyncRecordMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/util/SyncRecordHelper.java" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="添加从mysql上传数据到ES的错误重传功能">
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/dto/ProductSearchItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/dto/ProductSearchRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/dto/ProductSearchResult.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/ESProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/ESProductSku.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/EsSyncRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/EsSyncRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/dto/SearchRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/vo/SearchResultVO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/SyncScheduleConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/SyncScheduleConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/ProductFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/ProductFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/mapper/EsSyncRecordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/mapper/EsSyncRecordMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/SearchServiceImpl.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +133,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CartMainApplication">
+  <component name="RunManager" selected="JUnit.test.test">
     <configuration name="test.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="order-service" />
       <extension name="coverage">
@@ -244,13 +252,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="searchMainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="search-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lm.searchMainApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="lua.exe" />
       <option name="file" value="" />
@@ -321,7 +322,7 @@
       <workItem from="1755881763970" duration="843000" />
       <workItem from="1755946126659" duration="22026000" />
       <workItem from="1756002606401" duration="16270000" />
-      <workItem from="1756090460602" duration="36580000" />
+      <workItem from="1756090460602" duration="49726000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -467,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756184468539</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="添加从mysql上传数据到ES的错误重传功能">
+      <option name="closed" value="true" />
+      <created>1756185734420</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1756185734420</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -488,7 +497,8 @@
     <MESSAGE value="加入搜索功能，加入前端页面" />
     <MESSAGE value="基本完善前端页面和一系列功能" />
     <MESSAGE value="添加从mysql上传数据到ES的功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加从mysql上传数据到ES的功能" />
+    <MESSAGE value="添加从mysql上传数据到ES的错误重传功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加从mysql上传数据到ES的错误重传功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

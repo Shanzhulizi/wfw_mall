@@ -1,24 +1,15 @@
 package com.lm.product.service.impl;
 
-import com.lm.common.R;
-import com.lm.es.domain.ESProduct;
-import com.lm.product.domain.PageResult;
-import com.lm.product.domain.ProductSku;
-import com.lm.product.domain.ProductSpu;
 import com.lm.product.dto.*;
 import com.lm.product.feign.UserFeignClient;
 import com.lm.product.mapper.ProductMapper;
 import com.lm.product.service.ProductService;
-import com.lm.product.vo.ProductDetailVO;
-import com.lm.product.vo.ProductSkuVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
