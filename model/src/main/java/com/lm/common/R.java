@@ -49,4 +49,9 @@ public class R {
         r.setMsg(msg);
         return r;
     }
+
+    // 判断是否成功
+    public boolean isSuccess() {
+        return code != null && code == 200;
+    }
 }

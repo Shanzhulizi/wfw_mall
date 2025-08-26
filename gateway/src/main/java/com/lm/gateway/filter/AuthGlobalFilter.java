@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
@@ -21,6 +24,15 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     private static final String TOKEN_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
+    // 白名单接口（不需要登录）
+    private static final List<String> WHITE_LIST = Arrays.asList(
+            "/category/list",
+            "/category/products",
+            "/seckill",
+            "/user/checkLogin",
+            "/search/search",
+            "/product/recommend"
+    );
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -28,6 +40,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
         String path = request.getURI().getPath();
         // 1. 放行登录和注册请求
+        if (WHITE_LIST.stream().anyMatch(path::contains)) {
+            return chain.filter(exchange); // 放行，不做 token 校验
+        }
         if (path.contains("/login") || path.contains("/register")|| path.contains("/sendRegisterCode")|| path.contains("/sendLoginCode")) {
             return chain.filter(exchange); // 放行，不做 token 校验
         }

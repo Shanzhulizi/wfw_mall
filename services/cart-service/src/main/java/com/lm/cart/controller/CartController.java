@@ -1,6 +1,7 @@
 package com.lm.cart.controller;
 
 
+import com.lm.cart.domain.CartItem;
 import com.lm.cart.dto.AddCartDTO;
 import com.lm.cart.service.CartService;
 import com.lm.common.R;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "购物车接口", description = "购物车相关操作")
 @Slf4j
@@ -92,6 +95,9 @@ public class CartController {
         if (UserContextHolder.getUser().getId() != null) {
             userId = UserContextHolder.getUser().getId();
         }
-        return R.ok("展示购物车商品", cartService.listCart(userId,userKey));
+        log.info("userId: {}, userKey: {}", userId, userKey);
+        List<CartItem> cartItems = cartService.listCart(userId,userKey);
+        log.info("cartItems: {}", cartItems);
+        return R.ok("展示购物车商品", cartItems);
     }
 }

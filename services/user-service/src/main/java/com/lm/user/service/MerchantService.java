@@ -1,5 +1,6 @@
 package com.lm.user.service;
 
+import com.lm.user.domain.Merchant;
 import com.lm.user.domain.MerchantApplication;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface MerchantService {
     List<MerchantApplication> listReviewed();
 
     List<MerchantApplication> listAll();
+
+    List<Merchant> listByIds(List<Long> ids);
+
+    Merchant getById(Long id);
 }

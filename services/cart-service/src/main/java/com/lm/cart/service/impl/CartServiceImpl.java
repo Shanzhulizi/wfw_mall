@@ -6,6 +6,7 @@ import com.lm.cart.feign.ProductFeignClient;
 import com.lm.cart.mapper.CartMapper;
 import com.lm.cart.service.CartService;
 import com.lm.product.dto.ProductCartDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+@Slf4j
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -43,7 +44,7 @@ public class CartServiceImpl implements CartService {
             // 不存在，调用商品服务获取商品信息
 
             ProductCartDTO product =
-                    productFeignClient.getProductById(skuId);
+                    productFeignClient.getCartProductById(skuId);
 
             if (product == null) {
                 throw new RuntimeException("商品不存在：" + skuId);
@@ -101,7 +102,9 @@ public class CartServiceImpl implements CartService {
             values = stringRedisTemplate.opsForHash().values("cart:" + userId);
 
         }
+
         if (values == null || values.isEmpty()) {
+            log.info("购物车为空");
             return Collections.emptyList();
         }
         List<CartItem> cartItems = new ArrayList<>();

@@ -1,14 +1,16 @@
 package com.lm.product.mapper;
 
-import com.lm.es.ESProduct;
-import com.lm.product.dto.ProductCartDTO;
-import com.lm.product.dto.ProductPreloadDTO;
-import com.lm.product.dto.ProductPriceValidationDTO;
-import com.lm.product.dto.ProductRecommendDTO;
+import com.lm.es.domain.ESProduct;
+import com.lm.product.domain.ProductSku;
+import com.lm.product.domain.ProductSpu;
+import com.lm.product.dto.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ProductMapper {
@@ -44,4 +46,37 @@ public interface ProductMapper {
 
 
     List<ProductRecommendDTO> findRecommended(int offset, int size);
+
+
+
+
+
+
+
+
+    @Select("SELECT * FROM product_category WHERE id = #{id}")
+    ProductCategoryDTO selectCategoryById(Long id);
+
+    @Select("SELECT * FROM product_brand WHERE id = #{id}")
+    ProductBrandDTO selectBrandById(Long id);
+
+    @Select("SELECT * FROM product_sku WHERE spu_id = #{spuId}")
+    List<ProductSkuDTO> selectSkusBySpuId(Long spuId);
+
+    @Select("SELECT * FROM product_spu WHERE update_time > #{lastUpdateTime} ")
+    List<ProductSpuDTO> selectSpusAfterDate(Date date);
+
+    @Select("SELECT * FROM product_spu")
+    List<ProductSpuDTO> selectAllDate();
+
+
+    @Select("SELECT * FROM product_spu WHERE status = 1 ORDER BY id LIMIT #{offset}, #{size}")
+    List<ProductSpuDTO> selectAllWithPagination(@Param("offset") int offset, @Param("size") int size);
+
+    @Select("SELECT * FROM product_spu WHERE update_time >= #{sinceTime} AND status = 1 ORDER BY update_time LIMIT #{offset}, #{size}")
+    List<ProductSpuDTO> selectUpdatedAfterWithPagination(@Param("sinceTime") Date sinceTime,
+                                                      @Param("offset") int offset,
+                                                      @Param("size") int size);
+
+
 }

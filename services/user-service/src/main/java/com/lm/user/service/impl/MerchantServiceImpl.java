@@ -5,6 +5,7 @@ import com.lm.user.domain.Merchant;
 import com.lm.user.domain.MerchantApplication;
 import com.lm.user.mapper.MerchantMapper;
 import com.lm.user.service.MerchantService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+@Slf4j
 @Service
 public class MerchantServiceImpl implements MerchantService {
 
@@ -85,6 +87,31 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public List<MerchantApplication> listAll() {
         return merchantMapper.selectAll();
+    }
+
+
+
+    @Override
+    public Merchant getById(Long id) {
+        try {
+            return merchantMapper.selectMerchantById(id);
+        } catch (Exception e) {
+            log.error("获取商家信息失败: {}", id, e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Merchant> listByIds(List<Long> ids) {
+        try {
+            if (ids == null || ids.isEmpty()) {
+                return List.of();
+            }
+            return merchantMapper.selectByIds(ids);
+        } catch (Exception e) {
+            log.error("批量获取商家信息失败", e);
+            return List.of();
+        }
     }
 
 }

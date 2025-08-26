@@ -36,4 +36,13 @@
         ORDER BY RAND()
         LIMIT #{size} OFFSET #{offset}
     </select>
+
+
+
+
+<!--
+-->
+
+
+
 </mapper>

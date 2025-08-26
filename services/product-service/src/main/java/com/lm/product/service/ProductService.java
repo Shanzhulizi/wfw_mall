@@ -1,9 +1,11 @@
 package com.lm.product.service;
 
-import com.lm.product.dto.ProductCartDTO;
-import com.lm.product.dto.ProductPriceValidationDTO;
-import com.lm.product.dto.ProductRecommendDTO;
+import com.lm.es.domain.ESProduct;
+import com.lm.product.domain.PageResult;
+import com.lm.product.dto.*;
+import com.lm.product.vo.ProductDetailVO;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ProductService {
@@ -15,4 +17,20 @@ public interface ProductService {
 
 
     List<ProductRecommendDTO> getRecommendedProducts(int page, int size);
+
+
+
+
+    ProductCategoryDTO getCategoryById(Long id);
+
+    ProductBrandDTO getBrandById(Long id);
+
+    List<ProductSkuDTO> getSkusBySpuId(Long spuId);
+
+
+    List<ProductSpuDTO> listSpus(Long lastUpdateTime);
+
+    List<ProductSpuDTO> getSpusUpdatedAfter(Date sinceTime, int page, int size);
+
+    List<ProductSpuDTO> getAllSpus(int page, int size);
 }

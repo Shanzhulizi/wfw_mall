@@ -3,6 +3,7 @@ package com.lm.product.domain;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class ProductSpu {
@@ -16,9 +17,9 @@ public class ProductSpu {
     Integer status; // 商品状态 0:下架 1:上架
     Integer isHot;
     Integer isNew;
-    Integer isRecommend; // 是否推荐
+    Integer isRecommended; // 是否推荐
     Integer saleCount;  //销量
-    LocalDateTime createTime; // 创建时间
-    LocalDateTime updateTime; // 更新时间
+    Date createTime; // 创建时间
+   Date  updateTime; // 更新时间
 
 }

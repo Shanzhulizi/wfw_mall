@@ -136,12 +136,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("logout")
-    public R logout(HttpServletRequest request) {
+    @PostMapping("/logout")
+    public R logout() {
         // 从请求头获取token
-//        String token = request.getHeader("Authorization");
-        Long userId = UserContextHolder.getUser().getId();
-
+     Long userId = UserContextHolder.getUser().getId();
+           log.info("用户ID：{} 正在退出登录", userId);
         try {
             // 调用用户服务的注销方法
             userService.logout(userId);

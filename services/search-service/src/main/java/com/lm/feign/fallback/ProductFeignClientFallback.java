@@ -1,8 +1,10 @@
 package com.lm.feign.fallback;
 
 
-import com.lm.es.ESProduct;
+import com.lm.common.R;
+import com.lm.es.domain.ESProduct;
 import com.lm.feign.ProductFeignClient;
+import com.lm.product.domain.PageResult;
 
 import java.util.List;
 
@@ -10,7 +12,27 @@ public class ProductFeignClientFallback implements ProductFeignClient {
 
 
     @Override
-    public List<ESProduct> listAllForSearch() {
+    public R listSpus(Long lastUpdateTime) {
+        return null;
+    }
+
+    @Override
+    public R listSpus(Long lastUpdateTime, int page, int size) {
+        return null;
+    }
+
+    @Override
+    public R getCategoryById(Long id) {
+        return null;
+    }
+
+    @Override
+    public R getBrandById(Long id) {
+        return null;
+    }
+
+    @Override
+    public R getSkusBySpuId(Long spuId) {
         return null;
     }
 }

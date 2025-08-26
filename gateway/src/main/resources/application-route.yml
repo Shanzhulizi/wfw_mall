@@ -66,12 +66,20 @@ spring:
             - StripPrefix=1 # 去掉 /api
 
 
-        - id: search-service
+        - id: search-service-search
           uri: lb://search-service
           predicates:
             - Path=/api/search/** # 拦截前缀
           filters:
             - StripPrefix=1 # 去掉 /api
+
+        - id: search-service-sync
+          uri: lb://search-service
+          predicates:
+            - Path=/api/es-sync/** # 拦截前缀
+          filters:
+            - StripPrefix=1 # 去掉 /api
+
 #
 #-------------------------------------------------
 #

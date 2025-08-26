@@ -1,12 +1,22 @@
 package com.lm.service;
 
-import com.lm.es.ESProduct;
+import com.lm.es.dto.SearchRequestDTO;
+import com.lm.es.vo.SearchResultVO;
 
-import java.io.IOException;
 import java.util.List;
-
 public interface SearchService {
-    void bulkInsert(List<ESProduct> products);
-    List<ESProduct> search(String keyword, String brand, String category, Double minPrice, Double maxPrice, int page, int size) throws IOException;
-
+//    /**
+//     * 商品搜索
+//     */
+//    SearchResultVO searchProducts(SearchRequestDTO request);
+//
+//    /**
+//     * 自动补全建议
+//     */
+//    List<String> getSuggestions(String keyword);
+//
+//    /**
+//     * 热门搜索关键词
+//     */
+//    List<String> getHotKeywords();
 }

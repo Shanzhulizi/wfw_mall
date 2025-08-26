@@ -4,6 +4,7 @@ import com.lm.user.domain.Merchant;
 import com.lm.user.domain.MerchantApplication;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -33,4 +34,15 @@ public interface MerchantMapper {
     void insert(Merchant app);
 
     void setApplicationMerchantId(Long merchantId);
+    @Select({
+            "<script>",
+            "SELECT * FROM merchant WHERE id IN ",
+            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>",
+            "#{id}",
+            "</foreach>",
+            "</script>"
+    })
+    List<Merchant> selectByIds(List<Long> ids);
+    @Select("SELECT * FROM merchant WHERE id = #{id}")
+    Merchant selectMerchantById(Long id);
 }

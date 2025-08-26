@@ -1,30 +1,30 @@
-package com.lm.es;
+package com.lm.product.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class ESProduct {
+public class ProductDetailVO {
     private Long id;
     private String name;
     private Long categoryId;
+    private String categoryName;
     private Long brandId;
+    private String brandName;
     private Long merchantId;
+    private String shopName;
     private String description;
     private String mainImage;
-
-    private Double minPrice;
-    private Double maxPrice;
-    private Integer totalStock;
-
     private Integer status;
     private Integer isHot;
     private Integer isNew;
     private Integer isRecommended;
     private Integer saleCount;
+    private Date createTime;
+    private Date updateTime;
+
+    // SKU信息
+    private List<ProductSkuVO> skus;
 }

@@ -1,7 +1,7 @@
 package com.lm.controller;
 
-import com.lm.es.ESProduct;
-import com.lm.feign.ProductFeignClient;
+import com.lm.es.dto.SearchRequestDTO;
+import com.lm.es.vo.SearchResultVO;
 import com.lm.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-
+import com.lm.common.R;
 @Controller
 @Slf4j
 @ResponseBody
@@ -19,48 +18,142 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchController {
 
+//    @Autowired
+//    private SearchService searchService;
 
-    @Autowired
-    private SearchService searchService;
-
-    @Autowired
-    private ProductFeignClient productFeignClient;
-
-    /**
-     * 这个留着，我觉得应该在商家上传商品的时候添加商品到ES和MySQL，所以它是商家端的接口的一部分
-     *
-     * @param param
-     * @return
-     */
-//    // 上传商品数据到 ES
-//    @PostMapping("/upload")
-//    public R uploadProduct(@RequestBody ESProductDTO product) {
+//    @Autowired
+//    private ESDataImportService productImportService;
+//    /**
+//     * 商品搜索
+//     */
+//    @GetMapping("/search")
+//    public R searchProducts(SearchRequestDTO request) {
 //        try {
-//            productSearchService.uploadProduct(product);
-//            return AjaxResult.success("商品已上传到ES");
+//            SearchResultVO result = searchService.searchProducts(request);
+//            return R.ok("搜索成功", result);
 //        } catch (Exception e) {
-//            return AjaxResult.error("上传失败：" + e.getMessage());
-//
+//            log.error("搜索商品失败", e);
+//            return R.error("搜索失败: " + e.getMessage());
 //        }
 //    }
-    @PostMapping("/importAll")
-    public void importAllFromDB() throws IOException {
-        List<ESProduct> products = productFeignClient.listAllForSearch();
-        searchService.bulkInsert(products);
-    }
-
-    // 搜索商品
-    @GetMapping("/search")
-    public List<ESProduct> search(@RequestParam(required = false) String keyword,
-                                  @RequestParam(required = false) String brand,
-                                  @RequestParam(required = false) String category,
-                                  @RequestParam(required = false) Double minPrice,
-                                  @RequestParam(required = false) Double maxPrice,
-                                  @RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int size) throws IOException {
-
-
-        return searchService.search(keyword, brand, category, minPrice, maxPrice, page, size);
-    }
-
+//
+//    /**
+//     * 获取搜索建议
+//     */
+//    @GetMapping("/suggestions")
+//    public R getSuggestions(@RequestParam String keyword) {
+//        try {
+//            List<String> suggestions = searchService.getSuggestions(keyword);
+//            return R.ok("",suggestions);
+//        } catch (Exception e) {
+//            log.error("获取搜索建议失败", e);
+//            return R.error("获取搜索建议失败");
+//        }
+//    }
+//
+//    /**
+//     * 获取热门搜索词
+//     */
+//    @GetMapping("/hot-keywords")
+//    public R getHotKeywords() {
+//        try {
+//            List<String> hotKeywords = searchService.getHotKeywords();
+//            return R.ok("",hotKeywords);
+//        } catch (Exception e) {
+//            log.error("获取热门搜索词失败", e);
+//            return R.error("获取热门搜索词失败");
+//        }
+//    }
+//
+//    /**
+//     * 导入单个商品到ES
+//     */
+//    @PostMapping("/import/{productId}")
+//    public R importProduct(@PathVariable Long productId) {
+//        try {
+//            boolean success = productImportService.importProduct(productId);
+//            if (success) {
+//                return R.ok("导入成功");
+//            } else {
+//                return R.error("导入失败");
+//            }
+//        } catch (Exception e) {
+//            log.error("导入商品失败", e);
+//            return R.error("导入失败: " + e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * 批量导入商品到ES
+//     */
+//    @PostMapping("/import/batch")
+//    public R importProducts(@RequestBody List<Long> productIds) {
+//        try {
+//            int successCount = productImportService.importProducts(productIds);
+//            return R.ok("成功导入 " + successCount + " 个商品", successCount);
+//        } catch (Exception e) {
+//            log.error("批量导入商品失败", e);
+//            return R.error("批量导入失败: " + e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * 全量同步商品到ES
+//     */
+//    @PostMapping("/import/full-sync")
+//    public R fullSyncProducts() {
+//        try {
+//            int successCount = productImportService.fullSyncProducts();
+//            return R.ok("全量同步完成，成功导入 " + successCount + " 个商品", successCount);
+//        } catch (Exception e) {
+//            log.error("全量同步失败", e);
+//            return R.error("全量同步失败: " + e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * 删除ES中的商品
+//     */
+//    @DeleteMapping("/import/{productId}")
+//    public R deleteProduct(@PathVariable Long productId) {
+//        try {
+//            boolean success = productImportService.deleteProduct(productId);
+//            if (success) {
+//                return R.ok("删除成功");
+//            } else {
+//                return R.error("删除失败");
+//            }
+//        } catch (Exception e) {
+//            log.error("删除ES商品失败", e);
+//            return R.error("删除失败: " + e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * 批量删除ES中的商品
+//     */
+//    @DeleteMapping("/import/batch")
+//    public R deleteProducts(@RequestBody List<Long> productIds) {
+//        try {
+//            int successCount = productImportService.deleteProducts(productIds);
+//            return R.ok("成功删除 " + successCount + " 个商品", successCount);
+//        } catch (Exception e) {
+//            log.error("批量删除ES商品失败", e);
+//            return R.error("批量删除失败: " + e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * 获取ES索引中的商品数量
+//     */
+//    @GetMapping("/import/count")
+//    public R getIndexCount() {
+//        try {
+//            long count = productImportService.getIndexCount();
+//            return R.ok("获取成功", count);
+//        } catch (Exception e) {
+//            log.error("获取索引数量失败", e);
+//            return R.error("获取数量失败: " + e.getMessage());
+//        }
+//    }
 }

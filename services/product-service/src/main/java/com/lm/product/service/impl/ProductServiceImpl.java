@@ -1,18 +1,24 @@
 package com.lm.product.service.impl;
 
-import com.lm.product.dto.ProductCartDTO;
-import com.lm.product.dto.ProductPreloadDTO;
-import com.lm.product.dto.ProductPriceValidationDTO;
-import com.lm.product.dto.ProductRecommendDTO;
+import com.lm.common.R;
+import com.lm.es.domain.ESProduct;
+import com.lm.product.domain.PageResult;
+import com.lm.product.domain.ProductSku;
+import com.lm.product.domain.ProductSpu;
+import com.lm.product.dto.*;
+import com.lm.product.feign.UserFeignClient;
 import com.lm.product.mapper.ProductMapper;
 import com.lm.product.service.ProductService;
+import com.lm.product.vo.ProductDetailVO;
+import com.lm.product.vo.ProductSkuVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
@@ -26,6 +32,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     @Override
     public void preloadStockToRedis() {
@@ -67,6 +75,56 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductRecommendDTO> getRecommendedProducts(int page, int size) {
         int offset = (page - 1) * size;
         return productMapper.findRecommended(offset, size);
+    }
+
+
+
+
+//
+
+    @Override
+    public ProductCategoryDTO getCategoryById(Long id) {
+
+        return productMapper.selectCategoryById(id);
+    }
+
+    @Override
+    public ProductBrandDTO getBrandById(Long id) {
+
+        return productMapper.selectBrandById(id);
+    }
+
+    @Override
+    public List<ProductSkuDTO> getSkusBySpuId(Long spuId) {
+
+        return productMapper.selectSkusBySpuId(spuId);
+    }
+
+    @Override
+    public List<ProductSpuDTO> listSpus(Long lastUpdateTime) {
+        List<ProductSpuDTO> spus;
+        if (lastUpdateTime != null) {
+            //解析时间戳
+            Date date = new Date(lastUpdateTime);
+            spus = productMapper.selectSpusAfterDate(date);
+        } else {
+            spus = productMapper.selectAllDate();
+        }
+
+        return spus;
+    }
+
+    @Override
+    public List<ProductSpuDTO> getSpusUpdatedAfter(Date sinceTime, int page, int size) {
+        int offset = (page - 1) * size;
+        return productMapper.selectUpdatedAfterWithPagination(sinceTime, offset, size);
+
+    }
+
+    @Override
+    public List<ProductSpuDTO> getAllSpus(int page, int size) {
+        int offset = (page - 1) * size;
+        return productMapper.selectAllWithPagination(offset, size);
     }
 
 

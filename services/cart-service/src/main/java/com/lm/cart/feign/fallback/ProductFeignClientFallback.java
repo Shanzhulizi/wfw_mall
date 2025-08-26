@@ -6,7 +6,7 @@ import com.lm.product.dto.ProductCartDTO;
 public class ProductFeignClientFallback implements ProductFeignClient {
 
     @Override
-    public ProductCartDTO getProductById(Long skuId) {
+    public ProductCartDTO getCartProductById(Long skuId) {
         return null;
     }
 }

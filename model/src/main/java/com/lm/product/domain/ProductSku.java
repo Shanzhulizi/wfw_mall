@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class ProductSku {
@@ -14,6 +15,6 @@ public class ProductSku {
     Integer stock; // 商品sku的库存
     String image; // 商品sku的图片
     String attrValueJson;
-    LocalDateTime createTime; // 创建时间
-    LocalDateTime updateTime; // 更新时间
+    Date createTime; // 创建时间
+    Date updateTime; // 更新时间
 }
