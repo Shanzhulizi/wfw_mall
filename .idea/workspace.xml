@@ -4,60 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="基本完善前端页面和一系列功能">
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/ESProductSku.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/dto/SearchRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/vo/SearchResultVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/PageResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/MerchantDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductBrandDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductCategoryDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductSkuDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductSpuDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/vo/ProductDetailVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/vo/ProductSkuVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/UserFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ESImportService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ESImportServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/SyncScheduleConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/EsSyncController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/UserFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/EsDataSyncService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/util/ElasticsearchIndexCreator.java" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="添加从mysql上传数据到ES的功能">
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/EsSyncRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/mapper/EsSyncRecordMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/util/SyncRecordHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application-route.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/common/R.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/common/R.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/es/ESProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/es/domain/ESProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSku.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSku.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSpu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/feign/ProductFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/feign/fallback/ProductFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/feign/fallback/ProductFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/service/impl/CartServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/ProductMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/ProductMainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/ProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/resources/mapper/ProductMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/controller/SearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/SyncScheduleConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/config/SyncScheduleConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/ProductFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/ProductFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/SearchServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/MerchantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/MerchantController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/MerchantMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/MerchantMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/MerchantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/MerchantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +321,7 @@
       <workItem from="1755881763970" duration="843000" />
       <workItem from="1755946126659" duration="22026000" />
       <workItem from="1756002606401" duration="16270000" />
-      <workItem from="1756090460602" duration="35323000" />
+      <workItem from="1756090460602" duration="36580000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -498,7 +459,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756029646486</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="添加从mysql上传数据到ES的功能">
+      <option name="closed" value="true" />
+      <created>1756184468539</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1756184468539</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,7 +487,8 @@
     <MESSAGE value="加入管理员审批商家申请逻辑" />
     <MESSAGE value="加入搜索功能，加入前端页面" />
     <MESSAGE value="基本完善前端页面和一系列功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本完善前端页面和一系列功能" />
+    <MESSAGE value="添加从mysql上传数据到ES的功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加从mysql上传数据到ES的功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

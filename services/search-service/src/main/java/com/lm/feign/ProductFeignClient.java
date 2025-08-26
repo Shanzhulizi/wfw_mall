@@ -33,4 +33,7 @@ public interface ProductFeignClient {
 
     @GetMapping("/sku/bySpu/{spuId}")
     R getSkusBySpuId(@PathVariable Long spuId);
+
+    @GetMapping("/spu/{spuId}")
+    R getSpuById(Long spuId);
 }

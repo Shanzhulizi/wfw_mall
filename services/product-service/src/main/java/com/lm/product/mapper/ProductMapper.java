@@ -78,5 +78,6 @@ public interface ProductMapper {
                                                       @Param("offset") int offset,
                                                       @Param("size") int size);
 
-
+    @Select("SELECT * FROM product_spu WHERE id = #{spuId}")
+    ProductSpuDTO selectSpuById(Long spuId);
 }

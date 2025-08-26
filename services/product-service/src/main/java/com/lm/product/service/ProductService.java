@@ -33,4 +33,6 @@ public interface ProductService {
     List<ProductSpuDTO> getSpusUpdatedAfter(Date sinceTime, int page, int size);
 
     List<ProductSpuDTO> getAllSpus(int page, int size);
+
+    ProductSpuDTO getSpuById(Long spuId);
 }

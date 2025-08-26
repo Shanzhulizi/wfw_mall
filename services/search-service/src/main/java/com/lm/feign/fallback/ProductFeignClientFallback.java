@@ -35,4 +35,9 @@ public class ProductFeignClientFallback implements ProductFeignClient {
     public R getSkusBySpuId(Long spuId) {
         return null;
     }
+
+    @Override
+    public R getSpuById(Long spuId) {
+        return null;
+    }
 }

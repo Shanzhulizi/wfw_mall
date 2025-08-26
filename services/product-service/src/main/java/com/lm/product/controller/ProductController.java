@@ -205,5 +205,12 @@ public class ProductController {
 
     }
 
-
+    @GetMapping("/spu/{spuId}")
+    R getSpuById(Long spuId){
+        ProductSpuDTO spu = productService.getSpuById(spuId);
+        if (spu == null) {
+            return R.error("SPU不存在");
+        }
+        return R.ok("", spu);
+    }
 }

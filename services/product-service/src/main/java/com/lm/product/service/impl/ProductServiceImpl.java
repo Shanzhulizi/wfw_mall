@@ -127,5 +127,12 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.selectAllWithPagination(offset, size);
     }
 
+    @Override
+    public ProductSpuDTO getSpuById(Long spuId) {
+        ProductSpuDTO spu = productMapper.selectSpuById(spuId);
+
+        return spu;
+    }
+
 
 }
