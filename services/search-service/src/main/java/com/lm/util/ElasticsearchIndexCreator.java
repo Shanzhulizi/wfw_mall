@@ -24,7 +24,7 @@ public class ElasticsearchIndexCreator {
     public void createProductIndex() throws IOException {
         CreateIndexRequest request = new CreateIndexRequest("product_index");
 
-        // 索引映射配置 - 使用XContentBuilder转换为String
+        // 索引映射配置
         XContentBuilder mappingBuilder = XContentFactory.jsonBuilder()
                 .startObject()
                 .startObject("properties")
@@ -41,10 +41,21 @@ public class ElasticsearchIndexCreator {
                 .startObject("isNew").field("type", "integer").endObject()
                 .startObject("isRecommended").field("type", "integer").endObject()
                 .startObject("saleCount").field("type", "integer").endObject()
+
+                // 添加minPrice和maxPrice字段
+                .startObject("minPrice")
+                .field("type", "scaled_float")
+                .field("scaling_factor", 100)
+                .endObject()
+                .startObject("maxPrice")
+                .field("type", "scaled_float")
+                .field("scaling_factor", 100)
+                .endObject()
+
                 .startObject("createTime").field("type", "date").endObject()
                 .startObject("updateTime").field("type", "date").endObject()
 
-                // 分类信息（通过Feign获取）
+                // 分类信息
                 .startObject("categoryName").field("type", "keyword").endObject()
                 .startObject("brandName").field("type", "keyword").endObject()
                 .startObject("shopName").field("type", "keyword").endObject()
@@ -64,11 +75,7 @@ public class ElasticsearchIndexCreator {
                 .endObject()
                 .endObject();
 
-        // 将XContentBuilder转换为String
-        String mapping = Strings.toString(mappingBuilder);
-        request.mapping(mapping, XContentType.JSON);
-
-        // 创建索引
+        request.mapping(mappingBuilder.toString());
         esClient.indices().create(request, RequestOptions.DEFAULT);
     }
 }

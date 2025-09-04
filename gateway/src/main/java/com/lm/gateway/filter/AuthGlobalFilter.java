@@ -59,7 +59,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             }
         }
 
-        if(path.contains("/search" )&& token ==null||token.isEmpty()){
+        if(path.contains("/search" )&& token ==null||(token !=null&&token.isEmpty())){
             log.warn("搜索操作未携带token");
             return chain.filter(exchange);
         }

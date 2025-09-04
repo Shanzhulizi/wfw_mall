@@ -4,6 +4,7 @@ import com.lm.common.R;
 import com.lm.product.domain.ProductSpu;
 import com.lm.product.dto.*;
 import com.lm.product.service.ProductService;
+import com.lm.product.vo.ProductDetailVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,94 +61,23 @@ public class ProductController {
         return R.ok("返回推荐", products);
     }
 
+    /**
+     * 根据ID获取商品
+     */
+    @GetMapping("/detail/{id}")
+    public R getProductById(@PathVariable Long id) {
+        try {
+            ProductDetailVO product = productService.getProductDetailById(id);
+            if (product == null) {
+                return R.error("商品不存在");
+            }
+            return R.ok("",product);
+        } catch (Exception e) {
+            log.error("获取商品信息失败: {}", e.getMessage(), e);
+            return R.error("获取商品信息失败");
+        }
+    }
 
-//    /**
-//     * 根据ID获取商品
-//     */
-//    @GetMapping("/{id}")
-//    public R getProductById(@PathVariable Long id) {
-//        try {
-//            ProductDetailVO product = productService.getProductDetailById(id);
-//            if (product == null) {
-//                return R.error("商品不存在");
-//            }
-//            return R.ok("",product);
-//        } catch (Exception e) {
-//            log.error("获取商品信息失败: {}", e.getMessage(), e);
-//            return R.error("获取商品信息失败");
-//        }
-//    }
-//
-//    /**
-//     * 批量获取商品
-//     */
-//    @PostMapping("/batch")
-//    public R getProductsByIds(@RequestBody List<Long> ids) {
-//        try {
-//            if (ids == null || ids.isEmpty()) {
-//                return R.ok("", Collections.emptyList());
-//            }
-//
-//            List<ProductDetailVO> products = productService.getProductDetailsByIds(ids);
-//            return R.ok("",products);
-//        } catch (Exception e) {
-//            log.error("批量获取商品失败: {}", e.getMessage(), e);
-//            return R.error("批量获取商品失败");
-//        }
-//    }
-//
-//    /**
-//     * 获取所有上架商品 ，废弃
-//     */
-//    @GetMapping("/list/on-shelf")
-//    public R getOnShelfProducts() {
-//        try {
-//            List<ProductDetailVO> products = productService.getOnShelfProducts();
-//            return R.ok("",products);
-//        } catch (Exception e) {
-//            log.error("获取上架商品失败: {}", e.getMessage(), e);
-//            return R.error("获取上架商品失败");
-//        }
-//    }
-//    // 新增分页查询接口
-//    @GetMapping("/list/on-shelf-page")
-//    public PageResult<ESProduct> getOnShelfProductsByPage(
-//            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-//            @RequestParam(value = "pageSize", defaultValue = "500") Integer pageSize) {
-//
-//        // 使用原生MyBatis分页
-//        PageResult<ESProduct> result = productService.getOnShelfProductsByPage(pageNum, pageSize);
-//        return result;
-//    }
-//    /**
-//     * 获取指定时间后更新的商品
-//     */
-//    @GetMapping("/list/updated-after")
-//    public R getProductsUpdatedAfter(@RequestParam String afterTime) {
-//        try {
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date date = sdf.parse(afterTime);
-//
-//            List<ProductDetailVO> products = productService.getProductsUpdatedAfter(date);
-//            return R.ok("",products);
-//        } catch (Exception e) {
-//            log.error("获取增量商品失败: {}", e.getMessage(), e);
-//            return R.error("获取增量商品失败");
-//        }
-//    }
-
-
-//    @GetMapping("/spu/list")
-//    R listSpus(@RequestParam(required = false) Long lastUpdateTime) {
-//        List<ProductSpuDTO> spus =  productService.listSpus(lastUpdateTime);
-//
-//
-//
-//        if (spus == null || spus.isEmpty()) {
-//            return R.error("无商品数据");
-//        }
-//        return R.ok("", spus);
-//    }
 
     // ProductSpuController.java
     @GetMapping("/spu/list")

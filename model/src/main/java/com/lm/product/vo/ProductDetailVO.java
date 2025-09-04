@@ -27,4 +27,7 @@ public class ProductDetailVO {
 
     // SKU信息
     private List<ProductSkuVO> skus;
+
+    // 商品图片列表
+    private List<String> images;
 }

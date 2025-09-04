@@ -19,21 +19,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-/**
- * |→ 调用【商品服务】校验价格和库存
- * |→ 调用【用户服务】获取用户信息(顺便获取地址)
- * |→ 调用【优惠券服务】校验并锁定优惠券
- * |→ Redis 扣减库存（原子 Lua 脚本）
- * |→ 异步发送下单消息到 MQ（下单队列）
- *        ↓
- * 【订单服务消费者】消费消息创建订单 + 插入数据库
- *        ↓
- * 返回订单ID，前端跳转支付页
- *        ↓
- * 用户付款后【支付服务】回调
- *        ↓
- * 更新订单状态 → 通知发货 → 推送消息等
- */
+
     @PostMapping("/submit")
     public R submitOrder(@RequestBody OrderSubmitDTO dto){
 

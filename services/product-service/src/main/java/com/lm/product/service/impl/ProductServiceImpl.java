@@ -1,15 +1,26 @@
 package com.lm.product.service.impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.alibaba.nacos.client.naming.utils.CollectionUtils;
+import com.lm.common.R;
+import com.lm.product.domain.*;
 import com.lm.product.dto.*;
 import com.lm.product.feign.UserFeignClient;
-import com.lm.product.mapper.ProductMapper;
+import com.lm.product.mapper.*;
 import com.lm.product.service.ProductService;
+import com.lm.product.vo.ProductDetailVO;
+import com.lm.product.vo.ProductSkuVO;
+import com.lm.user.domain.Merchant;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
@@ -25,6 +36,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private UserFeignClient userFeignClient;
+
+    @Autowired
+    private ProductSpuMapper productSpuMapper;
+
+    @Autowired
+    private ProductSkuMapper productSkuMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
+
+    @Autowired
+    private BrandMapper brandMapper;
+
+//    @Autowired
+//    private MerchantMapper merchantMapper;
+
+    @Autowired
+    private ProductImageMapper productImageMapper;
 
     @Override
     public void preloadStockToRedis() {
@@ -67,8 +96,6 @@ public class ProductServiceImpl implements ProductService {
         int offset = (page - 1) * size;
         return productMapper.findRecommended(offset, size);
     }
-
-
 
 
 //
@@ -125,5 +152,105 @@ public class ProductServiceImpl implements ProductService {
         return spu;
     }
 
+
+    /**
+     * 根据SPU ID获取商品详情（不含评论）
+     */
+    public ProductDetailVO getProductDetailById(Long spuId) {
+        // 1. 获取SPU基本信息
+        ProductSpu productSpu = productSpuMapper.selectById(spuId);
+        if (productSpu == null || productSpu.getStatus() != 1) {
+            return null;
+        }
+
+        // 2. 构建商品详情VO对象
+        ProductDetailVO productDetail = new ProductDetailVO();
+        BeanUtils.copyProperties(productSpu, productDetail);
+
+        // 3. 获取分类名称
+        Category category = categoryMapper.selectById(productSpu.getCategoryId());
+        if (category != null) {
+            productDetail.setCategoryName(category.getName());
+        }
+
+        // 4. 获取品牌名称
+        Brand brand = brandMapper.selectById(productSpu.getBrandId());
+        if (brand != null) {
+            productDetail.setBrandName(brand.getName());
+        }
+
+        // 5. 获取店铺名称
+        R r = userFeignClient.getMerchantById(productSpu.getMerchantId());
+        Merchant merchant = (Merchant) r.getData();
+//        Merchant merchant = merchantMapper.selectById(productSpu.getMerchantId());
+        if (merchant != null) {
+            productDetail.setShopName(merchant.getShopName());
+        }
+
+        // 6. 获取SKU信息
+        List<ProductSku> skus = productSkuMapper.selectBySpuId(spuId);
+        productDetail.setSkus(convertToSkuVOs(skus));
+
+        // 7. 获取商品图片（从SKU中提取或单独查询）
+        productDetail.setImages(getProductImages(spuId, skus));
+
+        return productDetail;
+    }
+
+    /**
+     * 转换SKU信息为VO对象
+     */
+    private List<ProductSkuVO> convertToSkuVOs(List<ProductSku> skus) {
+        if (CollectionUtils.isEmpty(skus)) {
+            return new ArrayList<>();
+        }
+
+        return skus.stream().map(sku -> {
+            ProductSkuVO skuVO = new ProductSkuVO();
+            BeanUtils.copyProperties(sku, skuVO);
+
+            // 解析属性值JSON
+            if (StringUtils.isNotBlank(sku.getAttrValueJson())) {
+                try {
+//                    Map<String, String> attrMap = JSON.parseObject(sku.getAttrValueJson(),
+//                            new TypeReference<Map<String, String>>() {
+//                            });
+                    skuVO.setAttrValueJson(sku.getAttrValueJson());
+                } catch (Exception e) {
+                    log.warn("解析SKU属性JSON失败: {}", sku.getAttrValueJson(), e);
+                }
+            }
+
+            return skuVO;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取商品图片
+     */
+    private List<String> getProductImages(Long spuId, List<ProductSku> skus) {
+        List<String> images = new ArrayList<>();
+        ProductSpu productSpu = productSpuMapper.selectById(spuId);
+
+        // 1. 添加主图
+        if (StringUtils.isNotBlank(productSpu.getMainImage())) {
+            images.add(productSpu.getMainImage());
+        }
+
+        // 2. 从SKU中获取图片
+        skus.stream()
+                .filter(sku -> StringUtils.isNotBlank(sku.getImage()))
+                .map(ProductSku::getImage)
+                .distinct()
+                .forEach(images::add);
+
+        // 3. 从商品图片表中获取额外图片
+        List<ProductImage> extraImages = productImageMapper.selectBySpuId(spuId);
+        extraImages.stream()
+                .map(ProductImage::getImageUrl)
+                .forEach(images::add);
+
+        return images;
+    }
 
 }

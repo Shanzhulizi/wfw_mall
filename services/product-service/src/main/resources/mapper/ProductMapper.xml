@@ -28,15 +28,29 @@
     </select>
 
 
+<!--    <select id="findRecommended" resultType="com.lm.product.dto.ProductRecommendDTO">-->
+<!--        SELECT-->
+<!--         id,name, description, main_image, sale_count-->
+<!--        FROM product_spu ,product_sku-->
+<!--        WHERE is_recommended = 1 and status = 1 and product_spu.id = product_sku.spu_id-->
+<!--        ORDER BY RAND()-->
+<!--        LIMIT #{size} OFFSET #{offset}-->
+<!--    </select>-->
     <select id="findRecommended" resultType="com.lm.product.dto.ProductRecommendDTO">
         SELECT
-         id,name, description, main_image, sale_count
-        FROM product_spu
-        WHERE is_recommended = 1 and status = 1
+            spu.id,
+            spu.name,
+            spu.description,
+            spu.main_image,
+            spu.sale_count
+        FROM product_spu spu
+                 JOIN product_sku sku ON spu.id = sku.spu_id
+        WHERE spu.is_recommended = 1
+          AND spu.status = 1
+        GROUP BY spu.id
         ORDER BY RAND()
-        LIMIT #{size} OFFSET #{offset}
+            LIMIT #{size} OFFSET #{offset}
     </select>
-
 
 
 
