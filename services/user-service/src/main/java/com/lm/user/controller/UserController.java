@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -240,16 +241,13 @@ public class UserController {
     }
 
     @GetMapping("/receiverInfo/getById")
-    ReceiverInfoDTO getReceiveInfoBy(@RequestParam Long receiverInfoId) {
-        if (receiverInfoId == null) {
+    public R getReceiveInfoBy() {
+        Long userId = UserContextHolder.getUser().getId();
+        if (userId  == null) {
             return null;
         }
-        // 查询数据库，获取收货地址信息
-        ReceiverInfoDTO receiverInfo = receiverMapper.getReceiverInfoById(receiverInfoId);
-        if (receiverInfo == null) {
-            return null; // 或者抛出异常
-        }
-        return receiverInfo;
+        List<ReceiverInfoDTO> addresses = userService.getReceiverInfoByUserId(userId);
+        return R.ok("",addresses);
     }
 
 

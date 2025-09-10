@@ -1,6 +1,7 @@
 package com.lm.user.mapper;
 
 
+import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.user.domain.User;
 import com.lm.user.dto.UserInfoDTO;
 import com.lm.user.dto.UserUpdateDTO;
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -30,4 +32,6 @@ public interface UserMapper {
     User getById(Long userId);
 
     UserInfoDTO getUserInfoById(Long userId);
+
+    List<ReceiverInfoDTO> getReceiverInfoByUserId(Long userId);
 }

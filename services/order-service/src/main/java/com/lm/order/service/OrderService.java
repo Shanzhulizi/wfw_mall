@@ -8,4 +8,9 @@ public interface OrderService {
     OrderVO submitOrder(OrderSubmitDTO dto);
 
     OrderVO submitOrderTest(OrderSubmitTestDTO dto);
+
+
+    OrderVO getOrderDetail(String orderNo);
+
+    void updateOrderPaid(String orderNo);
 }

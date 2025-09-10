@@ -194,6 +194,7 @@ public class OrderServiceImpl implements OrderService {
             order.setReceiverInfoId(dto.getReceiverInfoId());
             orderMapper.insertOrder(order);
 
+            order.setStatus(OrderStatus.CREATING.getCode());//创建中
 
             // 3. 插入订单明细表
             for (OrderItem item : items) {
@@ -246,7 +247,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new RuntimeException("消息发送失败，订单创建终止");
             }
 
-
+            order.setStatus(OrderStatus.WAITING_PAY.getCode()); // 待支付
             // 6. 构建返回结果
             OrderVO vo = new OrderVO();
             vo.setOrderNo(orderNo);
@@ -330,7 +331,7 @@ public class OrderServiceImpl implements OrderService {
         dto.setOrderType(orderSubmitTestDTO.getOrderType());
         dto.setRemark(orderSubmitTestDTO.getRemark());
         dto.setPayType(orderSubmitTestDTO.getPayType());
-        dto.setFullDiscountId(orderSubmitTestDTO.getFullDiscountId());
+//        dto.setFullDiscountId(orderSubmitTestDTO.getFullDiscountId());
 
 
 //        Long userId = UserContextHolder.getUser().getId();
@@ -523,25 +524,19 @@ public class OrderServiceImpl implements OrderService {
             return vo;
 
 
-
-
-
-
-
-
-            //TODO
-
-            // 5. 【新增】创建支付订单（在下单成功后）
-            PaymentOrderDTO paymentOrder = paymentService.createPayment(
-                    order.getId(),
-                    dto.getUserId(),
-                    dto.getPayType() // 支付方式：ALIPAY, WECHAT
-            );
-            // 设置支付信息
-            vo.setPaymentId(paymentOrder.getPaymentId());
-            vo.setPayUrl(paymentOrder.getPayUrl());
-            vo.setQrCode(paymentOrder.getQrCode());
-            vo.setExpireMinutes(30); // 30分钟支付过期
+//            //TODO
+//
+//            // 5. 【新增】创建支付订单（在下单成功后）
+//            PaymentOrderDTO paymentOrder = paymentService.createPayment(
+//                    order.getId(),
+//                    dto.getUserId(),
+//                    dto.getPayType() // 支付方式：ALIPAY, WECHAT
+//            );
+//            // 设置支付信息
+//            vo.setPaymentId(paymentOrder.getPaymentId());
+//            vo.setPayUrl(paymentOrder.getPayUrl());
+//            vo.setQrCode(paymentOrder.getQrCode());
+//            vo.setExpireMinutes(30); // 30分钟支付过期
 
 
 
@@ -561,5 +556,21 @@ public class OrderServiceImpl implements OrderService {
         }
 
 
+    }
+
+
+
+
+
+   public OrderVO getOrderDetail(String orderNo){
+            OrderVO vo= orderMapper.getOrderDetail(orderNo);
+
+
+        return vo ;
+    }
+
+    @Override
+    public void updateOrderPaid(String orderNo) {
+        orderMapper.updateOrderStatusToPaid(orderNo, LocalDateTime.now());
     }
 }

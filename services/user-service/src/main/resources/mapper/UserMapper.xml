@@ -67,4 +67,10 @@
 
 
 
+
+    <select id="getReceiverInfoByUserId" resultType="com.lm.user.domain.ReceiverInfo" >
+        select id, receiver_name, phone,province,city,area,street, detail_address, is_default
+        from receiver_info
+        where user_id = #{userId}
+    </select>
 </mapper>

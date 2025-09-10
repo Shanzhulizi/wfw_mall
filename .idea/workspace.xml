@@ -4,112 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="接下来我要重构整个下单流程，改用RocketMQ来实现">
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/message/OrderCreateMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/message/OrderTimeoutMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/mq/OrderCreatedEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/Eumn/OrderStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitTestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/Enum/CouponStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/domain/Coupon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/logistics-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/config/RocketMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/PaymentCallbackController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/StockFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/StockFeignClientFallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/consumer/OrderCreateConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/consumer/OrderTimeoutConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/OrderTransactionListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/ProviderAdapterFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/impl/PaymentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/mapper/InventoryMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/stock-service/src/main/resources/mapper/InventoryMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="35c93898-e22b-4d5e-8e05-151804507a6d" name="更改" comment="改用RocketMQ重构整个下单流程，接下来引入支付功能，这里不使用具体的支付，而是模拟支付成功，但是流程是一样的，只是在付钱的时候不用现实的钱">
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/dto/PaymentRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/feign/OrderFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/feign/fallback/OrderFeignClientFallback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-utils/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common-utils/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/AdminContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/AdminContextHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-web/src/main/java/com/lm/utils/UserContextHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/lm/gateway/filter/AuthGlobalFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/model/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/cart/dto/CartPersistDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/cart/dto/CartPersistDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/domain/OrderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/vo/OrderVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/vo/OrderVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSku.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSku.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/domain/ProductSpu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductBrandDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductBrandDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductCategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductCategoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductSkuDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/product/dto/ProductSkuDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/domain/CouponUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/domain/CouponUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/dto/LockCouponsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/promotion/dto/LockCouponsDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/admin-service/src/main/java/com/lm/admin/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/cart-service/src/main/java/com/lm/cart/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/logistics-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/logistics-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/message-servicce/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/message-servicce/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/config/RabbitMQDeclareConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/config/RabbitMQTemplateConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/order/dto/OrderSubmitDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/dto/PaymentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/com/lm/payment/dto/PaymentDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/CouponFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/ProductFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/CouponFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/CouponFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/ProductFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/feign/fallback/ProductFeignClientFallback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mapper/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mapper/OrderMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/OrderMQListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/sender/OrderMQSender.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/sender/StockMQSender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/PaymentSuccessListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/mq/listener/PaymentSuccessListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/StockLuaService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/impl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/impl/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/service/impl/StockLuaServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/utils/OrderNoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/java/com/lm/order/utils/OrderNoGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order-service/src/main/resources/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service/src/main/resources/mapper/OrderMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/PaymentMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/PaymentMainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/mq/OutboxPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/mq/OutboxPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/repo/OutboxRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/repo/PaymentRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/UserFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/UserFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/fallback/UserFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductSkuMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/mapper/ProductSkuMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/product-service/src/main/java/com/lm/product/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/controller/PromotionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/PromotionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/mapper/CouponMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/PromotionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/promotion-service/src/main/java/com/lm/promotion/com/lm/promotion/service/impl/PromotionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/ProductFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/UserFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/UserFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/UserFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/feign/fallback/UserFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/searchMainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/SearchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/service/impl/EsDataSyncServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/util/ElasticsearchIndexCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/java/com/lm/util/ElasticsearchIndexCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/search-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/config/StockMQConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/controller/StockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/controller/StockController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/mapper/StockMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/mapper/StockMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/mq/listener/StockMQListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/service/StockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/service/StockService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/service/impl/StcokServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/java/com/lm/stock/service/impl/StcokServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/stock-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/stock-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/impl/PaymentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service/src/main/java/com/lm/payment/service/impl/PaymentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/CouponFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/CouponFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/fallback/CouponFeignClientFallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/feign/fallback/CouponFeignClientFallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/MerchantServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,8 +39,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -162,6 +82,7 @@
     &quot;Spring Boot.MessageMainApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.Order.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.OrderMainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.Payment.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.PaymentMainApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.Product.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.ProductMainApplication.executor&quot;: &quot;Run&quot;,
@@ -174,7 +95,7 @@
     &quot;Spring Boot.searchMainApplication.executor&quot;: &quot;Run&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Code/Java/wfw_mall/services/order-service/src/main/resources/mapper&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Code/Java/wfw_mall/services/payment-service/src/main/java/com/lm/payment/feign&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -200,11 +121,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Code\Java\wfw_mall\services\payment-service\src\main\java\com\lm\payment\feign" />
       <recent name="E:\Code\Java\wfw_mall\services\order-service\src\main\resources\mapper" />
       <recent name="E:\Code\Java\wfw_mall\services\logistics-service\src\main\resources" />
       <recent name="E:\Code\Java\wfw_mall\services\stock-service\src\main\resources\mapper" />
       <recent name="E:\Code\Java\wfw_mall\services\search-service\src\main\java\com\lm" />
-      <recent name="E:\Code\Java\wfw_mall\services\product-service\src\main\java\com\lm\product\feign" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Code\Java\wfw_mall\services\promotion-service\src\main\resources\mapper" />
@@ -226,7 +147,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Payment">
+  <component name="RunManager" selected="Spring Boot.Order">
     <configuration name="Admin" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="admin-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.lm.admin.AdminMainApplication" />
@@ -444,7 +365,8 @@
       <workItem from="1757345251344" duration="2514000" />
       <workItem from="1757349321020" duration="4443000" />
       <workItem from="1757483018490" duration="743000" />
-      <workItem from="1757500148248" duration="447000" />
+      <workItem from="1757500148248" duration="11588000" />
+      <workItem from="1757514636527" duration="832000" />
     </task>
     <task id="LOCAL-00001" summary="创建一个微服务商城项目">
       <option name="closed" value="true" />
@@ -622,7 +544,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756989200654</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="改用RocketMQ重构整个下单流程，接下来引入支付功能，这里不使用具体的支付，而是模拟支付成功，但是流程是一样的，只是在付钱的时候不用现实的钱">
+      <option name="closed" value="true" />
+      <created>1757500898304</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1757500898304</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,32 +576,8 @@
     <MESSAGE value="添加从mysql上传数据到ES的错误重传功能" />
     <MESSAGE value="搜索功能基本可用" />
     <MESSAGE value="接下来我要重构整个下单流程，改用RocketMQ来实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="接下来我要重构整个下单流程，改用RocketMQ来实现" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/controller/UserController.java</url>
-          <line>218</line>
-          <properties class="com.lm.user.controller.UserController" method="getUserInfo">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java</url>
-          <line>266</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/services/user-service/src/main/java/com/lm/user/service/impl/UserServiceImpl.java</url>
-          <line>273</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="改用RocketMQ重构整个下单流程，接下来引入支付功能，这里不使用具体的支付，而是模拟支付成功，但是流程是一样的，只是在付钱的时候不用现实的钱" />
+    <option name="LAST_COMMIT_MESSAGE" value="改用RocketMQ重构整个下单流程，接下来引入支付功能，这里不使用具体的支付，而是模拟支付成功，但是流程是一样的，只是在付钱的时候不用现实的钱" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

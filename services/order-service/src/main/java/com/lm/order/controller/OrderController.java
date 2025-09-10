@@ -8,10 +8,9 @@ import com.lm.order.service.OrderService;
 import com.lm.order.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @Slf4j
 @RestController
@@ -44,4 +43,30 @@ public class OrderController {
             return R.error("下单失败：" + e.getMessage());
         }
     }
+
+
+
+    @GetMapping("/detail")
+    public OrderVO getOrder(@RequestParam("orderNo") String orderNo) {
+        OrderVO orderVo = null;
+        try {
+            orderVo = orderService.getOrderDetail(orderNo);
+            return orderVo;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @PostMapping("/updatePaid")
+    void updateOrderPaid(@RequestParam("orderNo") String orderNo){
+        try {
+            orderService.updateOrderPaid(orderNo);
+        } catch (Exception e) {
+            log.error("更新订单支付状态失败，错误信息：{}", e.getMessage());
+        }
+
+
+    }
+
 }

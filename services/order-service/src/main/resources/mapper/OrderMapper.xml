@@ -44,25 +44,21 @@
     </insert>
 
 
-
-
     <insert id="insertOrderItem" parameterType="com.lm.order.domain.OrderItem" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `order_item` (
-            order_no,
-            sku_id,
-            quantity,
-            price,
-            total_price
-        ) VALUES (
-                     #{orderNo},
-                     #{skuId},
-                     #{quantity},
-                     #{price},
-                     #{totalPrice}
-                 )
+        INSERT INTO `order_item` (order_no,
+                                  sku_id,
+                                  quantity,
+                                  price,
+                                  total_price)
+        VALUES (#{orderNo},
+                #{skuId},
+                #{quantity},
+                #{price},
+                #{totalPrice})
     </insert>
 
-    <insert id="insertOrderShipping" parameterType="com.lm.order.domain.OrderShipping" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOrderShipping" parameterType="com.lm.order.domain.OrderShipping" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO `order_shipping`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">order_id,</if>
@@ -71,7 +67,8 @@
             <if test="province != null">province,</if>
             <if test="city != null">city,</if>
             <if test="area != null">area,</if>
-            <if test="detailAddress != null">detail_address,</if>       </trim>
+            <if test="detailAddress != null">detail_address,</if>
+        </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">#{orderId},</if>
@@ -88,7 +85,7 @@
     <!-- 更新订单状态 -->
     <update id="updateStatus">
         UPDATE `order`
-        SET status = #{code},
+        SET status      = #{code},
             update_time = NOW()
         WHERE order_no = #{orderNo}
     </update>
@@ -102,6 +99,20 @@
 
 
     <select id="selectOrderItems" resultType="com.lm.order.domain.OrderItem">
-        SELECT * FROM order_item WHERE order_no = #{orderNo}
+        SELECT *
+        FROM order_item
+        WHERE order_no = #{orderNo}
+    </select>
+
+    <select id="getOrderDetail" resultType="com.lm.order.vo.OrderVO">
+        select order_no,
+               merchant_id,
+               total_amount,
+               pay_amount,
+               status,
+               order_type,
+               receiver_info_id
+        from `order`
+        where order_no = #{orderNo}
     </select>
 </mapper>

@@ -1,7 +1,10 @@
 package com.lm.user.service;
 
 import com.lm.common.R;
+import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.user.dto.UserInfoDTO;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -24,4 +27,6 @@ public interface UserService {
     String loginAfterRegisterSuccess(String phone);
 
     UserInfoDTO getUserInfo(Long userId);
+
+    List<ReceiverInfoDTO> getReceiverInfoByUserId(Long userId);
 }

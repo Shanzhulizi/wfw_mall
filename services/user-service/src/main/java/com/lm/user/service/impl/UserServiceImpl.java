@@ -2,6 +2,7 @@ package com.lm.user.service.impl;
 
 import com.lm.common.R;
 import com.lm.common.utils.JwtUtils;
+import com.lm.order.dto.ReceiverInfoDTO;
 import com.lm.user.domain.User;
 import com.lm.user.domain.UserDeleteLog;
 import com.lm.user.dto.UserInfoDTO;
@@ -22,6 +23,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -267,14 +269,20 @@ public class UserServiceImpl implements UserService {
         UserInfoDTO userInfo = userMapper.getUserInfoById(userId);
 
 
-        //调用promotion-service获取
-        int couponCount = 0; // 假设从promotion-service获取的优惠券数量
-        Object data = couponFeignClient.getCouponCountByUserId(userId).getData();
-
-        couponCount = data == null ? 0 : Integer.parseInt(data.toString());
-
-        userInfo.setCouponCount(couponCount);
+//        //调用promotion-service获取
+//        int couponCount = 0; // 假设从promotion-service获取的优惠券数量
+//        Object data = couponFeignClient.getCouponCountByUserId(userId).getData();
+//
+//        couponCount = data == null ? 0 : Integer.parseInt(data.toString());
+//
+//        userInfo.setCouponCount(couponCount);
 
         return userInfo;
+    }
+
+
+
+    public List<ReceiverInfoDTO> getReceiverInfoByUserId(Long userId){
+        return userMapper.getReceiverInfoByUserId(userId);
     }
 }
