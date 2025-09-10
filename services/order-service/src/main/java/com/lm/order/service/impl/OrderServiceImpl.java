@@ -1,340 +1,565 @@
 package com.lm.order.service.impl;
 
-import com.lm.common.R;
+import com.lm.message.OrderCreateMessage;
+import com.lm.message.OrderTimeoutMessage;
+import com.lm.order.Eumn.OrderStatus;
 import com.lm.order.domain.Order;
 import com.lm.order.domain.OrderItem;
-import com.lm.order.domain.OrderShipping;
 import com.lm.order.dto.OrderSubmitDTO;
-import com.lm.order.dto.ReceiverInfoDTO;
-import com.lm.order.feign.CouponFeignClient;
-import com.lm.order.feign.PaymentFeignClient;
-import com.lm.order.feign.ProductFeignClient;
-import com.lm.order.feign.UserFeignClient;
+import com.lm.order.dto.OrderSubmitTestDTO;
+import com.lm.order.feign.*;
 import com.lm.order.mapper.OrderMapper;
-import com.lm.order.mq.sender.StockMQSender;
 import com.lm.order.service.OrderService;
-import com.lm.order.service.StockLuaService;
 import com.lm.order.utils.OrderNoGenerator;
 import com.lm.order.vo.OrderVO;
-import com.lm.payment.dto.PaymentInfoDTO;
-import com.lm.product.dto.ProductPriceValidationDTO;
+import com.lm.product.vo.ProductSkuVO;
+import com.lm.promotion.dto.LockCouponsDTO;
 import com.lm.utils.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.apache.rocketmq.client.producer.SendStatus;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
+import org.apache.rocketmq.common.message.MessageConst;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
 
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
 
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
-    @Autowired
-    private ProductFeignClient productFeign;
-
-    @Autowired
-    private StockLuaService stockLuaService;
-
     @Resource
     private UserFeignClient userFeign;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
-    @Autowired
-    private StockMQSender stockMQSender;
-    @Autowired
     PaymentFeignClient paymentFeignClient;
     @Autowired
     CouponFeignClient couponFeignClient;
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Autowired
+    private ProductFeignClient productFeignClient; // 商品服务Feign接口
+
+    @Autowired
+    private StockFeignClient stockFeignClient;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     /**
-     * |→ 生成订单号
-     * |→ 调用【商品服务】校验价格和库存
-     * |→ 调用【用户服务】获取用户信息(顺便获取地址)
-     * |→ 调用【优惠券服务】校验并锁定优惠券
-     * |→ Redis 扣减库存（原子 Lua 脚本）
-     * |→ 异步发送下单消息到 MQ（下单队列）
-     * ↓
-     * 【订单服务消费者】消费消息创建订单 + 插入数据库(消费者落库（幂等校验 + 订单入库）)
-     * ↓
-     * 返回订单ID，前端跳转支付页
-     * ↓
-     * 用户付款后【支付服务】回调
-     * ↓
-     * 更新订单状态 → 通知发货 → 推送消息等
+     * 秒杀下订单，不用seata，太重
+     * 普通下订单，直接用seata就行，不用搞什么mq
+     *
+     * @param dto
+     * @return
      */
+
     @Override
     @Transactional
-    public R submitOrder(OrderSubmitDTO dto) {
+//    @GlobalTransactional(name = "createOrder", rollbackFor = Exception.class) // 重点注解
+    public OrderVO submitOrder(OrderSubmitDTO dto) {
+
+        // 1. 参数校验
+//    - 校验 merchantId 是否存在、合法
+//    - 校验 orderItems 不为空，数量大于 0
+//    - 校验 receiverInfoId 是否存在（调用用户服务 / 地址服务）
+//    - 校验 payType 是否支持（1 微信 / 2 支付宝 / 3 余额等）
+
 
         Long userId = UserContextHolder.getUser().getId();
-        if (userId == null) return R.error("用户未登录");
+        if (userId == null) throw new RuntimeException("用户未登录");
         Long merchantId = dto.getMerchantId();
 
-        // 1. 生成订单号
-        String orderNo = OrderNoGenerator.generateOrderNo(userId, merchantId);
 
         // 2. 校验用户信息，这里不光是校验地址。应该有收货人的姓名，电话，地址
         // 一个用户有多个收货信息,所以校验用户id和收货信息id是否匹配
         boolean exist = userFeign.verifyAddressBelongsToUser(userId, dto.getReceiverInfoId());
-        if (!exist) return R.error("地址无效");
+        if (!exist) throw new RuntimeException("地址无效");
 
         // 3. 获取商品库存信息,用sku
         List<OrderItem> items = dto.getOrderItems();
-        if (items == null || items.isEmpty()) return R.error("订单项不能为空");
+        if (items == null || items.isEmpty()) throw new RuntimeException("订单项为空");
 
-        // 只校验商品价格(库存在lua中一次性校验)
-        // 怎么才能避免用for循环来一个个调用商品服务校验呢？
-        // 1. 提取 skuId 列表
-        List<Long> skuIds = items.stream()
-                .map(OrderItem::getSkuId)
-                .collect(Collectors.toList());
-        // 2. 批量调用商品服务
-        List<ProductPriceValidationDTO> productList = productFeign.getProductPriceValidationDTOsByIds(skuIds);
-        // 3. 映射为 Map<skuId, ProductDTO>
-        Map<Long, ProductPriceValidationDTO> productMap = productList.stream()
-                .collect(Collectors.toMap(ProductPriceValidationDTO::getSkuId, p -> p));
+
+        // 2. 计算价格（前端传过来的金额要校验，不能全信）
+//    - 遍历 orderItems，查询商品服务获取单价、库存、上下架状态
+//    - 计算订单总价 totalAmount
+//    - 应用优惠券 couponUserIds（调用优惠券服务校验有效性）
+//    - 应用满减活动 fullDiscountId（调用营销活动服务）
+//    - 得到实际应付金额 payAmount
+//    - 校验 dto.payAmount 与计算后的金额是否一致，避免前端篡改
+
         BigDecimal totalAmount = BigDecimal.ZERO;
+
 
         for (OrderItem item : items) {
             // 校验商品价格
-            ProductPriceValidationDTO pv = productMap.get(item.getSkuId());
-            if (pv == null) {
-                return R.error("商品不存在");
+            ProductSkuVO skuInfo = productFeignClient.getSkuInfo(item.getSkuId());
+            if (skuInfo == null) {
+                throw new RuntimeException("商品不可售: " + item.getSkuId());
             }
-            if (!pv.getPrice().equals(item.getPrice())) {
-                return R.error("商品价格有变动");
-            }
-            /**
-             * 优惠券的话，我觉得，因为订单里的各个商品的店铺都可能给一些优惠券，
-             * 然后平台也会给一些通用的优惠券，所以这里为了简单，我们就假设店铺不会给优惠券
-             */
-            //TODO 这里假设了本项目的优惠券只有平台优惠券，没有店铺优惠券
-            totalAmount = totalAmount.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
 
+            if (!skuInfo.getPrice().equals(item.getPrice())) {
+                throw new RuntimeException("商品价格有变动");
+            }
+
+            // 使用数据库价格覆盖前端传来的价格
+            BigDecimal dbPrice = skuInfo.getPrice();
+            BigDecimal itemTotal = dbPrice.multiply(new BigDecimal(item.getQuantity()));
+            item.setPrice(dbPrice);
+            item.setTotalPrice(itemTotal);
+
+            totalAmount = totalAmount.add(itemTotal);
 
         }
-
-        //TODO
-        // 4. 校验并冻结优惠券
-//        couponFeign.lockCoupon(dto.getCouponId(), userId);
-        // 优惠之后的价格
-        // TODO 可能有满减，可能有折扣
-//        "couponIds": [101, 102],           // 多张优惠券
-//        "fullDiscountId": 201,                // 满减活动 ID（只能有一个）
 
         List<Long> couponUserIds = dto.getCouponUserIds();
-        if( couponUserIds == null || couponUserIds.isEmpty()) {
-            // 没有使用优惠券
-            log.info("没有使用优惠券");
-        }
-//        LockCouponsDTO lockCouponsDTO = new LockCouponsDTO();
-//        lockCouponsDTO.setUserId(userId);
-//        lockCouponsDTO.setCouponUserIds(couponUserIds);
-        // 4. 校验并冻结优惠券
-        R result = couponFeignClient.lockCoupon(couponUserIds);
-        if (result.getCode() != 200) {
-            return R.error("优惠券锁定失败，无法提交订单");
-        }
-        //锁券之后用券
-        BigDecimal payAmount = totalAmount;
-        // 先满减后折扣
-        // TODO 这里真心做不下去了，我要用的话，又得调一次优惠服务，而且是先一次循环只算满减，再一次循环算折扣
+        // 1. 生成订单号
+        String orderNo = OrderNoGenerator.generateOrderNo(userId, merchantId);
+
+        try {
+   /*
+           优惠券，我直接假设，只有满减优惠券，可以叠加使用，就这样
+            */
+            BigDecimal discountAmount = BigDecimal.ZERO; // 优惠金额
 
 
+            // 2. 校验并锁定优惠券   预锁（Lock） - status: 0 → 1
+            if (couponUserIds != null && !couponUserIds.isEmpty()) {
+                // 加锁并计算优惠金额
+                LockCouponsDTO lockRequest = new LockCouponsDTO();
+                lockRequest.setCouponUserIds(dto.getCouponUserIds());
+                lockRequest.setUserId(userId);
+                lockRequest.setMerchantId(dto.getMerchantId());
+                lockRequest.setOrderAmount(totalAmount);
 
-        // 满减和优惠券是两码事，上面用完券还要看看有没有使用满减活动
-        // 满减不用锁，它不是用户自己的，是平台或商家的活动
-        Long fullDiscountId = dto.getFullDiscountId();
-        if( fullDiscountId != null) {
-            // TODO 这里调用满减服务
-            // 我们假设前端已经把满和减都传到后端了，这样我们就不用算了
-            // 而且我懒得再调用优惠服务来校验满减有没有效了
-            // 这里假设满减活动是有效的，直接计算满减金额
-            // 例如：满100减20
-            if(totalAmount .compareTo(new BigDecimal("100.00")) < 0) {
-                return R.error("订单金额未达到满减条件");
+                //这里加判断
+                BigDecimal couponDiscount = couponFeignClient.lockAndCalc(lockRequest);
+
+                discountAmount = discountAmount.add(couponDiscount);
             }
-            BigDecimal fullDiscountAmount = new BigDecimal("20.00"); // 假设满减金额为20元
-            payAmount = totalAmount.subtract(fullDiscountAmount);
-        }
-
-        List<String> keys = new ArrayList<>();
-        List<Integer> buyNums = new ArrayList<>();
-
-        for (OrderItem item : items) {
-            // 添加到扣减库存的 keys 和数量列表
-            keys.add(STOCK_KEY_PREFIX + item.getSkuId());
-            buyNums.add(item.getQuantity());
-        }
-        boolean success = stockLuaService.deductStock(keys, buyNums);
-        if (!success) {
-            log.info("redis扣减库存失败");
-            return R.error("redis扣减库存失败");
-        }
 
 
-        log.info("redis扣减库存成功");
-//        TODO 保证发送的数据库扣减库存消息一定能到达
-
-        // 发送消息
-        log.info("发送扣减库存消息");
-        stockMQSender.sendStockDeductMessage(orderNo, items);
-
-        Order order = new Order();
-        order.setOrderNo(orderNo);
-        order.setUserId(userId);
-        order.setMerchantId(merchantId);
-        //总金额和实付金额让前端算好往后传
-        // 不对，前面之所以校验金额，就是因为前端传来的可能是被修改过的
-        // 所以，这里还得算总金额和优惠后的金额
-        order.setTotalAmount(totalAmount);
-        order.setPayAmount(payAmount);
-        order.setCreateTime(LocalDateTime.now());
-        order.setUpdateTime(LocalDateTime.now());
-        order.setStatus(dto.getOrderType()); // 0待付款
-        order.setReceiverInfoId(dto.getReceiverInfoId());
-
-        log.info("提交订单,{}", order);
-        // 下单流程需要确保“下单成功”的结果立即返回给用户，用户体验必须快、确定。
-
-        // 用消息队列异步处理订单写库，会带来两个问题
-        /*
-        ❌ 问题 1：用户体验不确定
-            如果你把订单入库也丢到 MQ 异步处理，用户下单时你就只能告诉他：
-            “我们正在处理您的订单，请稍后查看订单状态。”
-            但你没法立即知道订单到底有没有落库、有没有成功。电商里这是不接受的。
-
-        ❌ 问题 2：订单编号无法快速返回
-            通常你要立即返回：
-
-            {
-              "code": 200,
-              "message": "下单成功",
-              "data": {
-                "orderNo": "202507160001",
-                "payUrl": "https://pay.xxx.com/order/202507160001"
-              }
+            // 4. 计算应付金额
+            BigDecimal payAmount = totalAmount.subtract(discountAmount);
+            if (payAmount.compareTo(BigDecimal.ZERO) < 0) {
+                payAmount = BigDecimal.ZERO;
             }
-            这个订单号需要你同步 insert 后再拿来返回。
-         */
-        /*
-            在高并发下，不会冲垮数据库吗?
-            在高并发场景下如果直接把“订单写库”暴露在前端请求中，确实存在数据库压力过大的风险。
-            但是，大型电商平台并不会单纯依赖数据库扛压，而是通过一整套架构手段解决这个问题。
 
-            正确姿势：限流 + 削峰 + 异步 + 分库分表 + 缓存前置
-         */
+            // 5. 金额校验（防止篡改）
+            if (dto.getPayAmount().compareTo(payAmount) != 0) {
+                throw new RuntimeException("订单金额校验失败，可能被篡改");
+            }
 
 
-        // 不仅要操作order表，还要插入order_item，order_shopping
+// 4. 创建订单（本地事务）
+//    - 生成全局唯一订单号（雪花算法 / 分布式 ID）
+//    - 插入订单表（order），状态设为：待支付
+//    - 插入订单明细表（order_item）
+//    - 插入优惠券使用记录（如果有）
 
 
-        /**
-         * 加个判断，是普通订单还是秒杀订单
-         * 注意这里的区分仅仅是为了能够区分，二者相应的操作是完全一致的
-         * 只不过，在秒杀中，需通过 “订单表简化、分库分表、全链路削峰” 等手段降低数据库压力，同时将非核心操作异步化。
-         */
-        if (dto.getOrderType() == 1) {
-            order.setOrderType(1); // 秒杀订单
-            //直接操作数据库
+            /**
+             *     这两支付完再填充
+             *     private int payType; // 支付方式：1微信 2支付宝 3余额等
+             *     private LocalDateTime payTime;
+             *     private int status; // 0待付款 1已付款 2已发货 3已收货 4已关闭 5退款中 6已退款
+             *     private int orderType; // 0普通订单 1秒杀 2团购等
+             *     private String cancelReason;
+             *     private LocalDateTime cancelTime;
+             *     private Long receiverInfoId;
+             */
+            // 2. 插入订单表
+            Order order = new Order();
+            order.setOrderNo(orderNo);
+            order.setUserId(userId);
+            order.setMerchantId(merchantId);
+            order.setTotalAmount(totalAmount);
+            order.setPayAmount(payAmount);
 
-//        // 6. 构造订单消息并发送到 MQ（状态：待支付）
-//        OrderMQMessage msg = new OrderMQMessage(dto, userId);
-//        rabbitTemplate.convertAndSend("order.exchange", "order.create", msg);
-        } else {
+            order.setStatus(OrderStatus.PRE_CREATE.getCode()); // 预创建
             order.setOrderType(0); // 普通订单
 
-            //直接操作数据库
-            // 6. 插入订单到数据库
+            order.setCreateTime(LocalDateTime.now());
+            order.setUpdateTime(LocalDateTime.now());
+
+            order.setReceiverInfoId(dto.getReceiverInfoId());
             orderMapper.insertOrder(order);
-            if (order.getId() == null) {
-                return R.error("订单创建失败");
-            }
-            // 获取订单ID
-            Long orderId = order.getId();
-
-            OrderShipping orderShipping = new OrderShipping();
-            orderShipping.setOrderId(order.getId());
-            //远程调用user服务，根据receiverInfoId获取收货人信息
-
-            ReceiverInfoDTO receiverInfo = userFeign.getReceiveInfoBy(dto.getReceiverInfoId());
-            orderShipping.setReceiverName(receiverInfo.getReceiverName());
-            orderShipping.setPhone(receiverInfo.getPhone());
-            orderShipping.setProvince(receiverInfo.getProvince());
-            orderShipping.setCity(receiverInfo.getCity());
-            orderShipping.setArea(receiverInfo.getArea());
-            orderShipping.setDetailAddress(receiverInfo.getDetail_address());
-
-            orderMapper.insertOrderShipping(orderShipping);
 
 
-//            for (OrderItem item : items) {
-//                OrderItem orderItem = new OrderItem();
-//                orderMapper.insertOrderItem(orderItem);
-//            }
-
+            // 3. 插入订单明细表
             for (OrderItem item : items) {
-                item.setOrderId(orderId);
+                OrderItem orderItem = new OrderItem();
+                orderItem.setOrderNo(orderNo);
+                orderItem.setSkuId(item.getSkuId());
+                orderItem.setQuantity(item.getQuantity());
+                orderItem.setPrice(item.getPrice());
+                orderItem.setTotalPrice(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+                orderMapper.insertOrderItem(orderItem);
             }
-            orderMapper.insertOrderItems(items);
+            log.info("订单创建成功，orderNo={}", orderNo);
+
+
+//        // 1. 预扣库存（在Redis中暂时锁定）
+//        boolean preDeductSuccess = stockFeignClient.preDeductStock(dto.getItems());
+//        if (!preDeductSuccess) {
+//            throw new RuntimeException("库存不足");
+//        }
+
+
+// 5. 发送事务消息（RocketMQ）
+//    - 发送半消息到 "order-create-topic"
+//    - 本地事务提交成功后，确认消息提交
+//    - 消费方：库存服务（扣减库存）、优惠券服务（锁定优惠券）、营销服务（锁定活动名额）
+//    - 注意幂等性：消费方要能处理重复消息
+
+            OrderCreateMessage message = new OrderCreateMessage();
+            message.setOrderNo(orderNo);
+            message.setUserId(userId);
+            message.setOrderSubmitDTO(dto);
+            message.setLockedCouponIds(couponUserIds);
+            message.setCreateTime(LocalDateTime.now());
+
+            // 4. 发送事务消息
+            // 发送事务消息 - 传入订单号作为arg参数
+            TransactionSendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
+                    "ORDER_CREATE_TOPIC:ORDER_CREATE",
+                    MessageBuilder.withPayload(message)  // 消息体
+                            .setHeader(MessageConst.PROPERTY_KEYS, orderNo)
+                            .build(),
+                    orderNo  // 这里传入订单号，不是整个dto！
+            );
+
+            log.info("事务消息发送完成，状态: {}, msgId: {}",
+                    sendResult.getSendStatus(), sendResult.getMsgId());
+
+            // 5. 根据发送结果处理
+            if (sendResult.getSendStatus() != SendStatus.SEND_OK) {
+                throw new RuntimeException("消息发送失败，订单创建终止");
+            }
+
+
+            // 6. 构建返回结果
+            OrderVO vo = new OrderVO();
+            vo.setOrderNo(orderNo);
+            vo.setTotalAmount(totalAmount);
+            vo.setPayAmount(payAmount);
+            vo.setStatus(order.getStatus());
+            vo.setCreateTime(order.getCreateTime());
+
+
+            // 发送超时消息（30分钟）
+            sendOrderTimeoutMessage(orderNo, 30);
+
+
+            return vo;
+
+
+        } catch (RuntimeException e) {
+            log.error("订单提交失败，orderSn: {}", orderNo, e);
+
+            // 7. 失败时释放锁定的优惠券
+            if (couponUserIds != null && !couponUserIds.isEmpty()) {
+                try {
+                    couponFeignClient.cancelLockCoupons(couponUserIds);
+                } catch (Exception ex) {
+                    log.error("释放优惠券失败", ex);
+                }
+            }
+
+            throw new RuntimeException("下单失败: " + e.getMessage());
+        }
+
+
+    }
+
+    // 在订单创建成功后发送延迟消息
+    private void sendOrderTimeoutMessage(String orderNo, int timeoutMinutes) {
+        try {
+            OrderTimeoutMessage timeoutMessage = new OrderTimeoutMessage();
+            timeoutMessage.setOrderNo(orderNo);
+
+            // RocketMQ延时级别：16=30分钟
+            int delayLevel = 16;
+
+            rocketMQTemplate.syncSend(
+                    "ORDER_TIMEOUT_TOPIC:ORDER_TIMEOUT",
+                    MessageBuilder.withPayload(timeoutMessage)
+                            .setHeader(MessageConst.PROPERTY_KEYS, orderNo)
+                            .build(),
+                    3000,      // 发送超时时间 ms
+                    delayLevel // 延迟级别
+            );
+            log.info("订单超时消息发送成功，orderNo={}, delayLevel={}", orderNo, delayLevel);
+        } catch (Exception e) {
+            log.error("发送订单超时消息失败 orderNo={}", orderNo, e);
+            // TODO: 可以考虑 fallback，比如记录到 DB，定时任务兜底
+        }
+    }
+
+
+    @Override
+    @Transactional
+//    @GlobalTransactional(name = "createOrder", rollbackFor = Exception.class) // 重点注解
+    public OrderVO submitOrderTest(OrderSubmitTestDTO orderSubmitTestDTO) {
+
+        // 1. 参数校验
+//    - 校验 merchantId 是否存在、合法
+//    - 校验 orderItems 不为空，数量大于 0
+//    - 校验 receiverInfoId 是否存在（调用用户服务 / 地址服务）
+//    - 校验 payType 是否支持（1 微信 / 2 支付宝 / 3 余额等）
+
+        Long userId = orderSubmitTestDTO.getUserId();
+
+
+        OrderSubmitDTO dto = new OrderSubmitDTO();
+        dto.setMerchantId(orderSubmitTestDTO.getMerchantId());
+        dto.setOrderItems(orderSubmitTestDTO.getOrderItems());
+        dto.setPayAmount(orderSubmitTestDTO.getPayAmount());
+        dto.setReceiverInfoId(orderSubmitTestDTO.getReceiverInfoId());
+        dto.setCouponUserIds(orderSubmitTestDTO.getCouponUserIds());
+        dto.setTotalAmount(orderSubmitTestDTO.getTotalAmount());
+        dto.setOrderType(orderSubmitTestDTO.getOrderType());
+        dto.setRemark(orderSubmitTestDTO.getRemark());
+        dto.setPayType(orderSubmitTestDTO.getPayType());
+        dto.setFullDiscountId(orderSubmitTestDTO.getFullDiscountId());
+
+
+//        Long userId = UserContextHolder.getUser().getId();
+        if (userId == null) throw new RuntimeException("用户未登录");
+        Long merchantId = dto.getMerchantId();
+
+
+        // 2. 校验用户信息，这里不光是校验地址。应该有收货人的姓名，电话，地址
+        // 一个用户有多个收货信息,所以校验用户id和收货信息id是否匹配
+//        boolean exist = userFeign.verifyAddressBelongsToUser(userId, dto.getReceiverInfoId());
+//        if (!exist) throw new RuntimeException("地址无效");
+
+        // 3. 获取商品库存信息,用sku
+        List<OrderItem> items = dto.getOrderItems();
+        if (items == null || items.isEmpty()) throw new RuntimeException("订单项为空");
+
+
+        // 2. 计算价格（前端传过来的金额要校验，不能全信）
+//    - 遍历 orderItems，查询商品服务获取单价、库存、上下架状态
+//    - 计算订单总价 totalAmount
+//    - 应用优惠券 couponUserIds（调用优惠券服务校验有效性）
+//    - 应用满减活动 fullDiscountId（调用营销活动服务）
+//    - 得到实际应付金额 payAmount
+//    - 校验 dto.payAmount 与计算后的金额是否一致，避免前端篡改
+
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
+
+        for (OrderItem item : items) {
+            // 校验商品价格
+            ProductSkuVO skuInfo = productFeignClient.getSkuInfo(item.getSkuId());
+            if (skuInfo == null) {
+                throw new RuntimeException("商品不可售: " + item.getSkuId());
+            }
+
+            if (!skuInfo.getPrice().equals(item.getPrice())) {
+                throw new RuntimeException("商品价格有变动");
+            }
+
+            // 使用数据库价格覆盖前端传来的价格
+            BigDecimal dbPrice = skuInfo.getPrice();
+            BigDecimal itemTotal = dbPrice.multiply(new BigDecimal(item.getQuantity()));
+            item.setPrice(dbPrice);
+            item.setTotalPrice(itemTotal);
+
+            totalAmount = totalAmount.add(itemTotal);
 
         }
 
-        // 7. 生成支付单（调用支付服务）
+        List<Long> couponUserIds = dto.getCouponUserIds();
+        // 1. 生成订单号
+        String orderNo = OrderNoGenerator.generateOrderNo(userId, merchantId);
 
-        PaymentInfoDTO paymentInfoDTO = new PaymentInfoDTO();
-        paymentInfoDTO.setOrderNo(orderNo);
-        paymentInfoDTO.setPayAmount(payAmount);
-        PaymentInfoDTO paymentDTO = paymentFeignClient.createPayment(paymentInfoDTO);
+        try {
+   /*
+           优惠券，我直接假设，只有满减优惠券，可以叠加使用，就这样
+            */
+            BigDecimal discountAmount = BigDecimal.ZERO; // 优惠金额
 
 
-        // 8. 返回订单信息+支付链接
-        OrderVO orderVO = convert(order);
-        orderVO.setPayUrl(paymentDTO.getPayUrl());
+            // 2. 校验并锁定优惠券   预锁（Lock） - status: 0 → 1
+            if (couponUserIds != null && !couponUserIds.isEmpty()) {
+                // 加锁并计算优惠金额
+                LockCouponsDTO lockRequest = new LockCouponsDTO();
+                lockRequest.setCouponUserIds(dto.getCouponUserIds());
+                lockRequest.setUserId(userId);
+                lockRequest.setMerchantId(dto.getMerchantId());
+                lockRequest.setOrderAmount(totalAmount);
 
-        //TODO 写入一条 延迟消息（如 30分钟）：用于“支付超时自动关闭订单”
+                //这里加判断
+                BigDecimal couponDiscount = couponFeignClient.lockAndCalc(lockRequest);
 
-        return R.ok("创建订单成功", orderVO);
+                discountAmount = discountAmount.add(couponDiscount);
+            }
+
+
+            // 4. 计算应付金额
+            BigDecimal payAmount = totalAmount.subtract(discountAmount);
+            if (payAmount.compareTo(BigDecimal.ZERO) < 0) {
+                payAmount = BigDecimal.ZERO;
+            }
+
+            // 5. 金额校验（防止篡改）
+            if (dto.getPayAmount().compareTo(payAmount) != 0) {
+                throw new RuntimeException("订单金额校验失败，可能被篡改");
+            }
+
+
+// 4. 创建订单（本地事务）
+//    - 生成全局唯一订单号（雪花算法 / 分布式 ID）
+//    - 插入订单表（order），状态设为：待支付
+//    - 插入订单明细表（order_item）
+//    - 插入优惠券使用记录（如果有）
+
+
+            /**
+             *     这两支付完再填充
+             *     private int payType; // 支付方式：1微信 2支付宝 3余额等
+             *     private LocalDateTime payTime;
+             *     private int status; // 0待付款 1已付款 2已发货 3已收货 4已关闭 5退款中 6已退款
+             *     private int orderType; // 0普通订单 1秒杀 2团购等
+             *     private String cancelReason;
+             *     private LocalDateTime cancelTime;
+             *     private Long receiverInfoId;
+             */
+            // 2. 插入订单表
+            Order order = new Order();
+            order.setOrderNo(orderNo);
+            order.setUserId(userId);
+            order.setMerchantId(merchantId);
+            order.setTotalAmount(totalAmount);
+            order.setPayAmount(payAmount);
+
+            order.setStatus(OrderStatus.PRE_CREATE.getCode()); // 预创建
+            order.setOrderType(0); // 普通订单
+
+            order.setCreateTime(LocalDateTime.now());
+            order.setUpdateTime(LocalDateTime.now());
+
+            order.setReceiverInfoId(dto.getReceiverInfoId());
+            orderMapper.insertOrder(order);
+
+
+            // 3. 插入订单明细表
+            for (OrderItem item : items) {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setOrderNo(orderNo);
+                orderItem.setSkuId(item.getSkuId());
+                orderItem.setQuantity(item.getQuantity());
+                orderItem.setPrice(item.getPrice());
+                orderItem.setTotalPrice(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+                orderMapper.insertOrderItem(orderItem);
+            }
+            log.info("订单创建成功，orderNo={}", orderNo);
+
+
+//        // 1. 预扣库存（在Redis中暂时锁定）
+//        boolean preDeductSuccess = stockFeignClient.preDeductStock(dto.getItems());
+//        if (!preDeductSuccess) {
+//            throw new RuntimeException("库存不足");
+//        }
+
+
+// 5. 发送事务消息（RocketMQ）
+//    - 发送半消息到 "order-create-topic"
+//    - 本地事务提交成功后，确认消息提交
+//    - 消费方：库存服务（扣减库存）、优惠券服务（锁定优惠券）、营销服务（锁定活动名额）
+//    - 注意幂等性：消费方要能处理重复消息
+
+            OrderCreateMessage message = new OrderCreateMessage();
+            message.setOrderNo(orderNo);
+            message.setUserId(userId);
+            message.setOrderSubmitDTO(dto);
+            message.setLockedCouponIds(couponUserIds);
+            message.setCreateTime(LocalDateTime.now());
+
+            // 4. 发送事务消息
+            // 发送事务消息 - 传入订单号作为arg参数
+            TransactionSendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
+                    "ORDER_CREATE_TOPIC:ORDER_CREATE",
+                    MessageBuilder.withPayload(message)  // 消息体
+                            .setHeader(MessageConst.PROPERTY_KEYS, orderNo)
+                            .build(),
+                    orderNo  // 这里传入订单号，不是整个dto！
+            );
+
+            log.info("事务消息发送完成，状态: {}, msgId: {}",
+                    sendResult.getSendStatus(), sendResult.getMsgId());
+
+            // 5. 根据发送结果处理
+            if (sendResult.getSendStatus() != SendStatus.SEND_OK) {
+                throw new RuntimeException("消息发送失败，订单创建终止");
+            }
+
+
+
+            // 6. 构建返回结果
+            OrderVO vo = new OrderVO();
+            vo.setOrderNo(orderNo);
+            vo.setTotalAmount(totalAmount);
+            vo.setPayAmount(payAmount);
+            vo.setStatus(order.getStatus());
+            vo.setCreateTime(order.getCreateTime());
+
+
+            // 发送超时消息（30分钟）
+            sendOrderTimeoutMessage(orderNo, 30);
+
+
+            return vo;
+
+
+
+
+
+
+
+
+            //TODO
+
+            // 5. 【新增】创建支付订单（在下单成功后）
+            PaymentOrderDTO paymentOrder = paymentService.createPayment(
+                    order.getId(),
+                    dto.getUserId(),
+                    dto.getPayType() // 支付方式：ALIPAY, WECHAT
+            );
+            // 设置支付信息
+            vo.setPaymentId(paymentOrder.getPaymentId());
+            vo.setPayUrl(paymentOrder.getPayUrl());
+            vo.setQrCode(paymentOrder.getQrCode());
+            vo.setExpireMinutes(30); // 30分钟支付过期
+
+
+
+        } catch (RuntimeException e) {
+            log.error("订单提交失败，orderSn: {}", orderNo, e);
+
+            // 7. 失败时释放锁定的优惠券
+            if (couponUserIds != null && !couponUserIds.isEmpty()) {
+                try {
+                    couponFeignClient.cancelLockCoupons(couponUserIds);
+                } catch (Exception ex) {
+                    log.error("释放优惠券失败", ex);
+                }
+            }
+
+            throw new RuntimeException("下单失败: " + e.getMessage());
+        }
+
 
     }
-
-    private OrderVO convert(Order order) {
-        OrderVO orderVO = new OrderVO();
-        orderVO.setId(order.getId());
-        orderVO.setOrderNo(order.getOrderNo());
-        orderVO.setUserId(order.getUserId());
-        orderVO.setMerchantId(order.getMerchantId());
-        orderVO.setTotalAmount(order.getTotalAmount());
-        orderVO.setPayAmount(order.getPayAmount());
-        orderVO.setCreateTime(order.getCreateTime());
-        orderVO.setUpdateTime(order.getUpdateTime());
-        orderVO.setStatus(order.getStatus());
-        orderVO.setReceiverInfoId(order.getReceiverInfoId());
-        orderVO.setRemark(order.getRemark());
-        order.setPayType(order.getPayType());
-        // 其他字段可以根据需要添加
-        return orderVO;
-
-    }
-
-
 }

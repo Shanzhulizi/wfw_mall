@@ -11,10 +11,31 @@ import java.util.List;
 public interface OrderMapper {
 
 
+
+
     void insertOrder(Order order);
+
+
+    void insertOrderItem(OrderItem items);
+
 
     void insertOrderShipping(OrderShipping orderShipping);
 
 
-    void insertOrderItems(List<OrderItem> items);
+
+    /**
+     * 更新订单状态
+     */
+    int updateStatus(String orderNo, int code);
+
+    /**
+     * 查询订单状态
+     */
+    Integer selectStatusByOrderNo(String orderNo);
+
+    
+    
+    List<OrderItem> selectOrderItems(String orderNo);
+
+
 }

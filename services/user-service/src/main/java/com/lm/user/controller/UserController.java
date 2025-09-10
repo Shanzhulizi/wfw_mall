@@ -10,13 +10,13 @@ import com.lm.user.mapper.ReceiverMapper;
 import com.lm.user.service.UserService;
 import com.lm.user.utils.VertifyCodeUtil;
 import com.lm.utils.UserContextHolder;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j

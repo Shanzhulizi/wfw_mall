@@ -43,34 +43,24 @@
         </trim>
     </insert>
 
-    <insert id="insertOrderItems" parameterType="java.util.List">
-        INSERT INTO `order_item` (
-        order_id,
-        spu_id,
-        sku_id,
-        product_name,
-        sku_attrs,
-        price,
-        quantity,
-        image,
-        total_price
-        )
-        VALUES
-        <foreach collection="list" item="item" separator=",">
-            (
-            #{item.orderId},
-            #{item.spuId},
-            #{item.skuId},
-            #{item.productName},
-            #{item.skuAttrs},
-            #{item.price},
-            #{item.quantity},
-            #{item.image},
-            #{item.totalPrice}
-            )
-        </foreach>
-    </insert>
 
+
+
+    <insert id="insertOrderItem" parameterType="com.lm.order.domain.OrderItem" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `order_item` (
+            order_no,
+            sku_id,
+            quantity,
+            price,
+            total_price
+        ) VALUES (
+                     #{orderNo},
+                     #{skuId},
+                     #{quantity},
+                     #{price},
+                     #{totalPrice}
+                 )
+    </insert>
 
     <insert id="insertOrderShipping" parameterType="com.lm.order.domain.OrderShipping" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order_shipping`
@@ -94,4 +84,24 @@
         </trim>
     </insert>
 
+
+    <!-- 更新订单状态 -->
+    <update id="updateStatus">
+        UPDATE `order`
+        SET status = #{code},
+            update_time = NOW()
+        WHERE order_no = #{orderNo}
+    </update>
+
+    <!-- 查询订单状态 -->
+    <select id="selectStatusByOrderNo" resultType="java.lang.Integer">
+        SELECT status
+        FROM `order`
+        WHERE order_no = #{orderNo}
+    </select>
+
+
+    <select id="selectOrderItems" resultType="com.lm.order.domain.OrderItem">
+        SELECT * FROM order_item WHERE order_no = #{orderNo}
+    </select>
 </mapper>

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Data
 public class OrderItem {
     private Long id;
-    private Long orderId;
+    private String orderNo;
     private Long spuId;
     private Long skuId;//一个spu可有多个sku，但是一个订单项只能对应一个sku
     private String productName;

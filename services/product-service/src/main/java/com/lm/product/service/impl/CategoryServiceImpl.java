@@ -4,14 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.lm.product.domain.Category;
 import com.lm.product.mapper.CategoryMapper;
 import com.lm.product.service.CategoryService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 

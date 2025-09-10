@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lm.stock.mapper.InventoryMapper">
+
+    <update id="deductAvailableStock">
+        UPDATE inventory
+        SET available_stock = available_stock - #{quantity},
+            locked_stock = locked_stock + #{quantity}
+        WHERE sku_id = #{skuId}
+          AND available_stock >= #{quantity}
+    </update>
+    <!-- 其他SQL略 -->
+</mapper>

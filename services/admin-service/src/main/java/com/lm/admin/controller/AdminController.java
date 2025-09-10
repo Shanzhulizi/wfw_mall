@@ -7,11 +7,11 @@ import com.lm.common.R;
 import com.lm.user.domain.MerchantApplication;
 import com.lm.user.dto.AuditDTO;
 import com.lm.user.dto.DeleteUserDTO;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j

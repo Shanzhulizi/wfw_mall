@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 
 @FeignClient(name = "user-service", path = "/merchant" , fallback = UserFeignClientFallback.class)
 public interface UserFeignClient {

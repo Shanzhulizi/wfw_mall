@@ -22,6 +22,7 @@ public class OrderNoGenerator {
 
         String orderNo = formattedDate + String.format("%04d", merchantId % 10000) + String.format("%04d", userId % 10000);
 
-        return orderNo;
+            return orderNo;
+
     }
 }

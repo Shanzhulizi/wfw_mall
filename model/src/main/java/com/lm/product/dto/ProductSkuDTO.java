@@ -1,8 +1,8 @@
 package com.lm.product.dto;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.api.utils.StringUtils;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.Collections;

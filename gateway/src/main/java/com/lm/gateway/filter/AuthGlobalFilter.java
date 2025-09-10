@@ -31,7 +31,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             "/seckill",
             "/user/checkLogin",
             "/search/search",
-            "/product/recommend"
+            "/product/recommend",
+            "/order/submit/test"
     );
 
     @Override

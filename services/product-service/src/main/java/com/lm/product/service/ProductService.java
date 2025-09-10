@@ -2,6 +2,7 @@ package com.lm.product.service;
 
 import com.lm.product.dto.*;
 import com.lm.product.vo.ProductDetailVO;
+import com.lm.product.vo.ProductSkuVO;
 
 import java.util.Date;
 import java.util.List;
@@ -35,4 +36,6 @@ public interface ProductService {
     ProductSpuDTO getSpuById(Long spuId);
 
     ProductDetailVO getProductDetailById(Long id);
+
+    ProductSkuVO getSkuInfo(Long skuId);
 }

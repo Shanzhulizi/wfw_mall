@@ -1,15 +1,16 @@
 package com.lm.product.controller;
 
 import com.lm.common.R;
-import com.lm.product.domain.ProductSpu;
 import com.lm.product.dto.*;
 import com.lm.product.service.ProductService;
 import com.lm.product.vo.ProductDetailVO;
+import com.lm.product.vo.ProductSkuVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,13 +37,23 @@ public class ProductController {
 
         if (list == null || list.isEmpty()) {
             log.warn("No products found for the provided IDs: {}", ids);
-            return List.of(); // Return an empty list if no products are found
+            return new ArrayList<>(); // Return an empty list if no products are found
         }
 
         return list;
     }
 
+    @GetMapping("/skuInfo")
+    public ProductSkuVO getSkuInfo(@RequestParam("skuId") Long skuId) {
 
+
+        ProductSkuVO skuInfo = productService.getSkuInfo(skuId);
+        if (skuInfo == null) {
+            log.warn("SKU not found for skuId: {}", skuId);
+            return null; // or throw an exception, or return a default value
+        }
+        return skuInfo;
+    }
     @GetMapping("/{skuId}")
     ProductCartDTO getCartProductById(@PathVariable("skuId") Long skuId) {
         ProductCartDTO productCartDTO = productService.getProductById(skuId);

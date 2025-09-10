@@ -1,8 +1,6 @@
 package com.lm.product.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.lm.common.R;
 import com.lm.product.domain.*;
@@ -19,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.lm.common.constant.RedisConstants.STOCK_KEY_PREFIX;
@@ -195,6 +196,15 @@ public class ProductServiceImpl implements ProductService {
         productDetail.setImages(getProductImages(spuId, skus));
 
         return productDetail;
+    }
+
+    @Override
+    public ProductSkuVO getSkuInfo(Long skuId) {
+        ProductSkuVO sku = productSkuMapper.getSkuById(skuId);
+        if (sku == null) {
+            throw new RuntimeException("商品不存在或已下架，skuId=" + skuId);
+        }
+        return sku;
     }
 
     /**

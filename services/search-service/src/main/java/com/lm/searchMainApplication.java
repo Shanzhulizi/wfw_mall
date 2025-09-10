@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@MapperScan("com.lm.mapper")
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
+@MapperScan("com.lm.mapper")
 public class searchMainApplication {
 
     public static void main(String[] args) {

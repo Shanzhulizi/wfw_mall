@@ -1,9 +1,10 @@
 package com.lm.utils;
 
 import com.lm.user.dto.UserFilgerDTO;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户上下文持有者，用于获取当前请求的用户信息

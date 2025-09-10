@@ -2,12 +2,10 @@ package com.lm.order.feign;
 
 
 import com.lm.order.feign.fallback.ProductFeignClientFallback;
-import com.lm.product.dto.ProductPriceValidationDTO;
+import com.lm.product.vo.ProductSkuVO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = "product-service",fallback = ProductFeignClientFallback.class) // feign客户端
 public interface ProductFeignClient {
@@ -20,6 +18,6 @@ public interface ProductFeignClient {
 
 
 
-    @PostMapping("/product/getByIds")
-    List<ProductPriceValidationDTO> getProductPriceValidationDTOsByIds(@RequestBody List<Long> ids);
+    @GetMapping("/product/skuInfo")
+    ProductSkuVO getSkuInfo(@RequestParam("skuId") Long skuId);
 }

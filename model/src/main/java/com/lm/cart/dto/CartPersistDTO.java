@@ -1,13 +1,19 @@
 package com.lm.cart.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
+
+
 @Entity
+@Table(name = "cart_items") // 根据你的表名调整
 @Data
 public class CartPersistDTO {
+
     @Id
     private Long id;
 

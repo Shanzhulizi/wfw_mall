@@ -30,7 +30,12 @@ rocketmq:
   name-server: localhost:9876
   producer:
     group: inventory-producer-group
+    send-message-timeout: 3000
+    retry-times-when-send-failed: 2
 
+order:
+  timeout-minutes: 30    # 订单超时时间（分钟）
+  max-retry-count: 3     # 最大重试次数
 
 server:
   port: 6000

@@ -3,7 +3,6 @@ package com.lm.service.impl;
 import com.lm.common.R;
 import com.lm.feign.ProductFeignClient;
 import com.lm.feign.UserFeignClient;
-import com.lm.mapper.EsSyncRecordMapper;
 import com.lm.service.EsDataSyncService;
 import com.lm.util.SyncRecordHelper;
 import lombok.extern.slf4j.Slf4j;

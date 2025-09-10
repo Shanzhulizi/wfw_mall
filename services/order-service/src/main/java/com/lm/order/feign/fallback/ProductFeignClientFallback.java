@@ -1,17 +1,13 @@
 package com.lm.order.feign.fallback;
 
 import com.lm.order.feign.ProductFeignClient;
-import com.lm.product.dto.ProductPriceValidationDTO;
-
-import java.util.Collections;
-import java.util.List;
+import com.lm.product.vo.ProductSkuVO;
 
 public class ProductFeignClientFallback implements ProductFeignClient {
+
+
     @Override
-    public List<ProductPriceValidationDTO> getProductPriceValidationDTOsByIds(List<Long> ids) {
-        List<ProductPriceValidationDTO> emptyList = Collections.emptyList();
-        return emptyList;
+    public ProductSkuVO getSkuInfo(Long skuId) {
+        return null;
     }
-
-
 }

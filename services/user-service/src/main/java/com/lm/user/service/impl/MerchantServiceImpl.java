@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @Slf4j
 @Service
@@ -80,7 +82,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public List<MerchantApplication> listReviewed() {
-        List<Integer> statusList = List.of(1, 2); // 1: 通过, 2: 拒绝
+        List<Integer> statusList = Arrays.asList(1, 2); // 1: 通过, 2: 拒绝
         return merchantMapper.selectByStatusList(statusList);
     }
 
@@ -105,12 +107,12 @@ public class MerchantServiceImpl implements MerchantService {
     public List<Merchant> listByIds(List<Long> ids) {
         try {
             if (ids == null || ids.isEmpty()) {
-                return List.of();
+                return new ArrayList<>();
             }
             return merchantMapper.selectByIds(ids);
         } catch (Exception e) {
             log.error("批量获取商家信息失败", e);
-            return List.of();
+            return new ArrayList<>();
         }
     }
 

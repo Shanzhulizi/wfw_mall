@@ -25,15 +25,12 @@ spring:
           max-idle: 8
           min-idle: 2
           max-wait: 1000ms
-  rabbitmq:
-    listener:
-      simple:
-        acknowledge-mode: manual  # 手动 ack
+
 server:
   port: 8000
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.lm.stock.domain   # 你的实体类包名
+  type-aliases-package: com.lm.product.domain   # 你的实体类包名
   configuration:
     map-underscore-to-camel-case: true       # 自动驼峰映射 user_type -> userType
 
